@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<!--
+===============================================================================
+  ORCLUXURYTRANSPORT — Sitio web de una página
+  Transporte turístico y ejecutivo en Panamá
+===============================================================================
+
+  GUÍA RÁPIDA DE EDICIÓN (todo se edita en este mismo archivo)
+
+  1. FOTOS ....... Busque los comentarios "REEMPLAZAR FOTO". Cada espacio tiene
+                   la línea de <img> ya escrita y comentada: se descomenta, se
+                   pone la ruta de la foto real y se borra el <div class="ph">.
+                   La foto de portada se cambia en la variable --img-portada
+                   (dentro de <style>, sección 1).
+
+  2. WHATSAPP .... Sección 1 del <script>, constante CONFIG.whatsapp.
+                   Formato obligatorio: código de país + número, sin espacios
+                   ni guiones. Panamá = 507. Ejemplo: 50768026916
+
+  3. TESTIMONIOS . Son DE EJEMPLO. Deben reemplazarse por testimonios reales
+                   antes de publicar el sitio. Busque "TESTIMONIOS DE EJEMPLO".
+
+  4. TEXTOS ...... Todos están en el HTML, en texto plano. Se editan directo.
+
+  NOTA TÉCNICA: archivo único, sin librerías externas. HTML5 + CSS3 + JavaScript
+  puro. Funciona abriéndolo con doble clic, sin servidor ni conexión.
+===============================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== SEO ===== -->
+  <title>Transporte Turístico y Ejecutivo en Panamá | OrcLuxuryTransport</title>
+  <meta name="description" content="Traslados al aeropuerto, recorridos turísticos y transporte corporativo en Panamá. Vehículos cómodos, conductores profesionales y atención 24/7. Reserve por WhatsApp.">
+  <meta name="author" content="OrcLuxuryTransport">
+  <meta name="theme-color" content="#0F0F0F">
+  <link rel="canonical" href="https://orcluxurytransport.com/">
+
+  <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_PA">
+  <meta property="og:site_name" content="OrcLuxuryTransport">
+  <meta property="og:title" content="Transporte Turístico y Ejecutivo en Panamá | OrcLuxuryTransport">
+  <meta property="og:description" content="Traslados al aeropuerto, recorridos turísticos y transporte corporativo en Panamá. Puntualidad, seguridad y comodidad en cada viaje.">
+  <meta property="og:url" content="https://orcluxurytransport.com/">
+  <!-- REEMPLAZAR FOTO: imagen que se muestra al compartir el enlace (1200x630 px) -->
+  <!-- <meta property="og:image" content="https://orcluxurytransport.com/fotos/portada-social.jpg"> -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Ícono de la pestaña del navegador -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F0F0F'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='bold' fill='%23C8A44D' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+
+  <!-- Datos estructurados para Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "OrcLuxuryTransport",
+    "description": "Servicio de transporte turístico y ejecutivo en Panamá: traslados al aeropuerto, recorridos turísticos, transporte corporativo y viajes personalizados.",
+    "url": "https://orcluxurytransport.com/",
+    "telephone": "+507 6802-6916",
+    "email": "orielca507@gmail.com",
+    "areaServed": { "@type": "Country", "name": "Panamá" },
+    "address": { "@type": "PostalAddress", "addressCountry": "PA" },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "00:00",
+      "closes": "23:59"
+    }
+  }
+  </script>
+
+<style>
+/* ==========================================================================
+   1. VARIABLES Y REAJUSTE BASE
+   ========================================================================== */
+:root{
+  /* Paleta institucional */
+  --negro:        #0F0F0F;
+  --gris-oscuro:  #2E2E2E;
+  --dorado:       #C8A44D;
+  --blanco:       #FFFFFF;
+
+  /* Tonos derivados */
+  --negro-suave:  #151515;
+  --dorado-claro: #DCC07C;
+  --texto:        rgba(255,255,255,.78);
+  --texto-tenue:  rgba(255,255,255,.55);
+  --borde:        rgba(255,255,255,.10);
+  --borde-dorado: rgba(200,164,77,.35);
+
+  /* Estructura */
+  --ancho-max:    1200px;
+  --alto-header:  78px;
+  --radio:        14px;
+  --sombra:       0 18px 45px rgba(0,0,0,.45);
+  --transicion:   .35s cubic-bezier(.4,0,.2,1);
+
+  /* Tipografía */
+  --fuente: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* ---- FOTO DE PORTADA -------------------------------------------------
+     REEMPLAZAR FOTO: cambie el valor por  url("fotos/portada.jpg")
+     Recomendado: foto horizontal, mínimo 1920 px de ancho.
+     Mientras no haya foto real, se muestra un fondo degradado.            */
+  --img-portada: linear-gradient(125deg,#1b1b1b 0%,#0F0F0F 45%,#242424 100%);
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+
+html{
+  scroll-behavior:smooth;          /* Desplazamiento suave del menú */
+  scroll-padding-top:var(--alto-header);
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  font-family:var(--fuente);
+  font-size:17px;
+  line-height:1.7;
+  color:var(--texto);
+  background:var(--negro);
+  overflow-x:hidden;
+}
+
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; cursor:pointer; }
+ul{ margin:0; padding:0; list-style:none; }
+
+/* ==========================================================================
+   2. TIPOGRAFÍA Y ELEMENTOS REUTILIZABLES
+   ========================================================================== */
+h1,h2,h3{
+  margin:0;
+  color:var(--blanco);
+  line-height:1.2;
+  font-weight:600;
+  letter-spacing:-.015em;
+}
+h1{ font-size:clamp(2.1rem,5.5vw,4rem); }
+h2{ font-size:clamp(1.7rem,3.6vw,2.6rem); }
+h3{ font-size:1.18rem; letter-spacing:0; }
+p{ margin:0 0 1.1em; }
+p:last-child{ margin-bottom:0; }
+
+.contenedor{
+  width:100%;
+  max-width:var(--ancho-max);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+.seccion{
+  padding:104px 0;
+  scroll-margin-top:var(--alto-header);
+}
+.seccion--alterna{ background:var(--negro-suave); }
+
+/* Encabezado de sección: etiqueta pequeña + título + línea dorada */
+.seccion__encabezado{
+  max-width:660px;
+  margin:0 auto 62px;
+  text-align:center;
+}
+.etiqueta{
+  display:inline-block;
+  margin-bottom:14px;
+  font-size:.74rem;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--dorado);
+}
+.seccion__encabezado p{
+  margin-top:16px;
+  color:var(--texto-tenue);
+}
+.linea-dorada{
+  width:58px; height:2px;
+  margin:20px auto 0;
+  background:linear-gradient(90deg,var(--dorado),transparent);
+}
+.linea-dorada--izq{ margin-left:0; }
+
+/* --- Botones --- */
+.boton{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:15px 32px;
+  border:1px solid transparent;
+  border-radius:999px;
+  font-size:.94rem;
+  font-weight:600;
+  letter-spacing:.03em;
+  text-align:center;
+  transition:transform var(--transicion), background var(--transicion),
+             color var(--transicion), border-color var(--transicion),
+             box-shadow var(--transicion);
+}
+.boton--principal{
+  background:var(--dorado);
+  color:var(--negro);
+}
+.boton--principal:hover{
+  background:var(--dorado-claro);
+  transform:translateY(-3px);
+  box-shadow:0 12px 30px rgba(200,164,77,.32);
+}
+.boton--contorno{
+  border-color:var(--borde-dorado);
+  color:var(--blanco);
+  background:rgba(255,255,255,.04);
+}
+.boton--contorno:hover{
+  border-color:var(--dorado);
+  color:var(--dorado);
+  transform:translateY(-3px);
+}
+.boton--ancho{ width:100%; }
+
+/* --- Íconos --- */
+.ico{
+  width:24px; height:24px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  flex-shrink:0;
+}
+.ico--relleno{ fill:currentColor; stroke:none; }
+
+/* --- Animación de aparición al bajar (scroll reveal) ---
+   Solo se activa si JavaScript está disponible; si no, todo se ve normal. */
+.js .revelar{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity .7s ease, transform .7s cubic-bezier(.4,0,.2,1);
+  transition-delay:var(--retraso,0s);
+}
+.js .revelar.visible{ opacity:1; transform:none; }
+
+/* --- Accesibilidad --- */
+.salto-contenido{
+  position:absolute; left:-9999px;
+  z-index:1000;
+  padding:12px 20px;
+  background:var(--dorado); color:var(--negro);
+  border-radius:0 0 8px 0;
+  font-weight:600;
+}
+.salto-contenido:focus{ left:0; top:0; }
+
+:focus-visible{
+  outline:2px solid var(--dorado);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+/* Respeta la preferencia del sistema de reducir animaciones */
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    transition-duration:.01ms !important;
+  }
+  .js .revelar{ opacity:1; transform:none; }
+}
+
+/* --- Marcas de contenido de muestra --------------------------------------
+   Identifican los textos que todavía no son reales. SE ELIMINAN cuando se
+   coloquen los testimonios verdaderos: borre estas dos reglas y las
+   etiquetas <span class="marca-ejemplo"> y <p class="nota-preview">.        */
+.marca-ejemplo{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:5px 12px;
+  font-size:.66rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dorado);
+  background:rgba(200,164,77,.10);
+  border:1px solid var(--borde-dorado);
+  border-radius:999px;
+}
+.nota-preview{
+  margin-top:18px;
+  padding:14px 18px;
+  font-size:.86rem;
+  color:var(--texto-tenue);
+  background:rgba(200,164,77,.06);
+  border:1px dashed var(--borde-dorado);
+  border-radius:10px;
+}
+
+/* ==========================================================================
+   3. ENCABEZADO Y MENÚ DE NAVEGACIÓN
+   ========================================================================== */
+.header{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  height:var(--alto-header);
+  display:flex;
+  align-items:center;
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:background var(--transicion), height var(--transicion),
+             border-color var(--transicion), backdrop-filter var(--transicion);
+}
+/* Estado con fondo, al bajar de la portada */
+.header.fijo{
+  height:66px;
+  background:rgba(15,15,15,.94);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom-color:var(--borde);
+}
+.header__interior{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  width:100%;
+  max-width:var(--ancho-max);
+  margin:0 auto;
+  padding:0 24px;
+}
+
+/* Logotipo tipográfico */
+.logo{
+  display:flex;
+  flex-direction:column;
+  line-height:1.1;
+  font-weight:700;
+  letter-spacing:.02em;
+}
+.logo__nombre{ font-size:1.16rem; color:var(--blanco); }
+.logo__nombre span{ color:var(--dorado); }
+.logo__bajada{
+  font-size:.56rem;
+  font-weight:500;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--texto-tenue);
+}
+
+/* Enlaces del menú */
+.nav__lista{
+  display:flex;
+  align-items:center;
+  gap:36px;
+}
+.nav__enlace{
+  position:relative;
+  padding:6px 0;
+  font-size:.9rem;
+  font-weight:500;
+  color:var(--texto);
+  transition:color var(--transicion);
+}
+.nav__enlace::after{           /* Subrayado dorado animado */
+  content:"";
+  position:absolute;
+  bottom:0; left:0;
+  width:0; height:1.5px;
+  background:var(--dorado);
+  transition:width var(--transicion);
+}
+.nav__enlace:hover,
+.nav__enlace.activo{ color:var(--blanco); }
+.nav__enlace:hover::after,
+.nav__enlace.activo::after{ width:100%; }
+
+.nav__cta{ margin-left:8px; padding:11px 24px; font-size:.86rem; }
+
+/* Botón hamburguesa (solo en pantallas pequeñas) */
+.nav__boton{
+  display:none;
+  padding:8px;
+  background:none;
+  border:1px solid var(--borde);
+  border-radius:10px;
+  color:var(--blanco);
+}
+
+/* ==========================================================================
+   4. PORTADA (HERO)
+   ========================================================================== */
+.portada{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:calc(var(--alto-header) + 40px) 0 90px;
+  overflow:hidden;
+}
+.portada__fondo{
+  position:absolute;
+  inset:0;
+  background-image:var(--img-portada);
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.04);
+  animation:acercamiento 22s ease-out forwards;
+}
+@keyframes acercamiento{ to{ transform:scale(1); } }
+
+/* Capa oscura sobre la foto, para que el texto se lea siempre */
+.portada__capa{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(15,15,15,.94) 0%, rgba(15,15,15,.72) 48%, rgba(15,15,15,.5) 100%),
+    linear-gradient(0deg,  rgba(15,15,15,.96) 0%, rgba(15,15,15,0) 55%);
+}
+.portada__contenido{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+}
+.portada h1{ margin-bottom:22px; }
+.portada h1 em{
+  font-style:normal;
+  color:var(--dorado);
+}
+.portada__subtitulo{
+  max-width:540px;
+  margin-bottom:38px;
+  font-size:clamp(1.02rem,2vw,1.24rem);
+  color:var(--texto);
+}
+.portada__botones{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+}
+
+/* Datos rápidos bajo los botones */
+.portada__datos{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px 34px;
+  margin-top:52px;
+  padding-top:30px;
+  border-top:1px solid var(--borde);
+}
+.portada__dato{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:.87rem;
+  color:var(--texto-tenue);
+}
+.portada__dato .ico{ width:18px; height:18px; color:var(--dorado); }
+
+/* Indicador de "baje para ver más" */
+.portada__indicador{
+  position:absolute;
+  bottom:26px; left:50%;
+  z-index:2;
+  color:var(--texto-tenue);
+  transform:translateX(-50%);
+  animation:flotar 2.4s ease-in-out infinite;
+}
+@keyframes flotar{
+  0%,100%{ transform:translate(-50%,0); }
+  50%    { transform:translate(-50%,9px); }
+}
+
+/* ==========================================================================
+   5. NOSOTROS
+   ========================================================================== */
+.nosotros__rejilla{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+.nosotros__texto h2{ margin-bottom:8px; }
+.nosotros__lista{
+  display:grid;
+  gap:16px;
+  margin-top:34px;
+}
+.nosotros__lista li{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  font-size:.97rem;
+}
+.nosotros__lista .ico{
+  width:21px; height:21px;
+  margin-top:3px;
+  color:var(--dorado);
+}
+.nosotros__lista strong{ color:var(--blanco); font-weight:600; }
+
+/* Marco decorativo de la imagen */
+.nosotros__marco{ position:relative; }
+.nosotros__marco::after{
+  content:"";
+  position:absolute;
+  right:-16px; bottom:-16px;
+  width:62%; height:62%;
+  border:1px solid var(--borde-dorado);
+  border-radius:var(--radio);
+  pointer-events:none;
+}
+.nosotros__marco img,
+.nosotros__marco .ph{
+  border-radius:var(--radio);
+  box-shadow:var(--sombra);
+  aspect-ratio:4/5;
+  object-fit:cover;
+  width:100%;
+}
+
+/* ==========================================================================
+   6. SERVICIOS
+   ========================================================================== */
+.rejilla-3{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(286px,1fr));
+  gap:26px;
+}
+.servicio{
+  position:relative;
+  padding:40px 32px;
+  background:var(--negro-suave);
+  border:1px solid var(--borde);
+  border-radius:var(--radio);
+  overflow:hidden;
+  transition:transform var(--transicion), border-color var(--transicion),
+             background var(--transicion);
+}
+.seccion--alterna .servicio{ background:rgba(255,255,255,.03); }
+/* Línea dorada que crece en el borde superior al pasar el cursor */
+.servicio::before{
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  width:0; height:2px;
+  background:linear-gradient(90deg,var(--dorado),transparent);
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.servicio:hover{
+  transform:translateY(-8px);
+  border-color:var(--borde-dorado);
+}
+.servicio:hover::before{ width:100%; }
+
+.servicio__icono{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:58px; height:58px;
+  margin-bottom:24px;
+  color:var(--dorado);
+  background:rgba(200,164,77,.09);
+  border:1px solid var(--borde-dorado);
+  border-radius:12px;
+  transition:background var(--transicion), transform var(--transicion);
+}
+.servicio__icono .ico{ width:26px; height:26px; }
+.servicio:hover .servicio__icono{
+  background:rgba(200,164,77,.16);
+  transform:scale(1.07);
+}
+.servicio h3{ margin-bottom:12px; }
+.servicio p{ font-size:.95rem; color:var(--texto-tenue); }
+
+/* ==========================================================================
+   7. POR QUÉ ELEGIRNOS
+   ========================================================================== */
+.beneficios{
+  position:relative;
+  background:
+    radial-gradient(900px 420px at 50% 0%, rgba(200,164,77,.07), transparent 70%),
+    var(--negro);
+  border-top:1px solid var(--borde);
+  border-bottom:1px solid var(--borde);
+}
+.beneficio{
+  display:flex;
+  align-items:flex-start;
+  gap:18px;
+  padding:26px;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--borde);
+  border-radius:var(--radio);
+  transition:transform var(--transicion), border-color var(--transicion),
+             background var(--transicion);
+}
+.beneficio:hover{
+  transform:translateY(-5px);
+  background:rgba(255,255,255,.05);
+  border-color:var(--borde-dorado);
+}
+.beneficio__check{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:38px; height:38px;
+  flex-shrink:0;
+  color:var(--negro);
+  background:var(--dorado);
+  border-radius:50%;
+}
+.beneficio__check .ico{ width:20px; height:20px; stroke-width:2.4; }
+.beneficio h3{ margin-bottom:5px; font-size:1.04rem; }
+.beneficio p{ font-size:.9rem; color:var(--texto-tenue); }
+
+/* ==========================================================================
+   8. GALERÍA Y VISOR DE IMÁGENES (LIGHTBOX)
+   ========================================================================== */
+.galeria{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:22px;
+}
+.galeria__item{
+  position:relative;
+  margin:0;
+  border-radius:var(--radio);
+  overflow:hidden;
+  cursor:zoom-in;
+  background:var(--gris-oscuro);
+  box-shadow:var(--sombra);
+  border:1px solid var(--borde);
+  transition:transform var(--transicion), border-color var(--transicion);
+}
+.galeria__item:hover{
+  transform:translateY(-6px);
+  border-color:var(--borde-dorado);
+}
+.galeria__item img,
+.galeria__item .ph{
+  width:100%;
+  aspect-ratio:4/3;
+  object-fit:cover;
+  transition:transform .6s cubic-bezier(.4,0,.2,1);
+}
+.galeria__item:hover img,
+.galeria__item:hover .ph{ transform:scale(1.07); }
+
+/* Rótulo que aparece al pasar el cursor */
+.galeria__pie{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:38px 20px 18px;
+  font-size:.9rem;
+  font-weight:500;
+  color:var(--blanco);
+  background:linear-gradient(0deg,rgba(15,15,15,.92),transparent);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity var(--transicion), transform var(--transicion);
+}
+.galeria__item:hover .galeria__pie,
+.galeria__item:focus-within .galeria__pie{ opacity:1; transform:none; }
+
+/* --- Visor a pantalla completa --- */
+.visor{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:70px 20px;
+  background:rgba(8,8,8,.96);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.visor.abierto{ display:flex; }
+.visor__medio{
+  max-width:min(1100px,92vw);
+  max-height:82vh;
+}
+.visor__medio img,
+.visor__medio .ph{
+  width:auto;
+  max-width:100%;
+  max-height:82vh;
+  aspect-ratio:auto;
+  border-radius:10px;
+  object-fit:contain;
+}
+.visor__medio .ph{ width:min(760px,88vw); aspect-ratio:4/3; }
+.visor__titulo{
+  position:absolute;
+  bottom:26px; left:0; right:0;
+  text-align:center;
+  font-size:.94rem;
+  color:var(--texto);
+}
+.visor__boton{
+  position:absolute;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:48px; height:48px;
+  color:var(--blanco);
+  background:rgba(255,255,255,.07);
+  border:1px solid var(--borde);
+  border-radius:50%;
+  transition:background var(--transicion), color var(--transicion);
+}
+.visor__boton:hover{ background:var(--dorado); color:var(--negro); }
+.visor__boton--cerrar{ top:22px; right:22px; }
+.visor__boton--ant{ left:22px; top:50%; transform:translateY(-50%); }
+.visor__boton--sig{ right:22px; top:50%; transform:translateY(-50%); }
+
+/* ==========================================================================
+   9. TESTIMONIOS
+   ========================================================================== */
+.testimonio{
+  position:relative;
+  padding:38px 32px;
+  background:var(--negro-suave);
+  border:1px solid var(--borde);
+  border-radius:var(--radio);
+  transition:transform var(--transicion), border-color var(--transicion);
+}
+.testimonio:hover{
+  transform:translateY(-6px);
+  border-color:var(--borde-dorado);
+}
+.testimonio__estrellas{
+  display:flex;
+  gap:4px;
+  margin-bottom:20px;
+  color:var(--dorado);
+}
+.testimonio__estrellas .ico{ width:17px; height:17px; }
+.testimonio blockquote{
+  margin:0 0 24px;
+  font-size:1rem;
+  line-height:1.75;
+  color:var(--texto);
+}
+.testimonio__autor{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-top:20px;
+  border-top:1px solid var(--borde);
+}
+.testimonio__inicial{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px; height:44px;
+  flex-shrink:0;
+  font-weight:700;
+  color:var(--dorado);
+  background:rgba(200,164,77,.12);
+  border:1px solid var(--borde-dorado);
+  border-radius:50%;
+}
+.testimonio__nombre{
+  display:block;
+  font-weight:600;
+  color:var(--blanco);
+}
+.testimonio__detalle{ font-size:.84rem; color:var(--texto-tenue); }
+
+/* ==========================================================================
+   10. CONTACTO Y FORMULARIO DE RESERVA
+   ========================================================================== */
+.contacto__rejilla{
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  gap:60px;
+  align-items:start;
+}
+
+/* --- Columna de datos --- */
+.contacto__datos{ display:grid; gap:16px; margin:32px 0; }
+.dato{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:20px 22px;
+  background:rgba(255,255,255,.03);
+  border:1px solid var(--borde);
+  border-radius:12px;
+  transition:border-color var(--transicion), transform var(--transicion);
+}
+.dato:hover{ border-color:var(--borde-dorado); transform:translateX(4px); }
+.dato__icono{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:46px; height:46px;
+  flex-shrink:0;
+  color:var(--dorado);
+  background:rgba(200,164,77,.09);
+  border-radius:11px;
+}
+.dato__etiqueta{
+  display:block;
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--texto-tenue);
+}
+.dato__valor{
+  font-size:1.04rem;
+  font-weight:600;
+  color:var(--blanco);
+  word-break:break-word;
+}
+
+/* --- Formulario --- */
+.formulario{
+  padding:40px;
+  background:var(--negro-suave);
+  border:1px solid var(--borde);
+  border-radius:var(--radio);
+  box-shadow:var(--sombra);
+}
+.seccion--alterna .formulario{ background:rgba(255,255,255,.03); }
+.formulario__titulo{ margin-bottom:6px; font-size:1.4rem; }
+.formulario__nota{
+  margin-bottom:28px;
+  font-size:.89rem;
+  color:var(--texto-tenue);
+}
+.formulario__rejilla{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+.campo{ display:flex; flex-direction:column; gap:8px; }
+.campo--completo{ grid-column:1/-1; }
+.campo label{
+  font-size:.79rem;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--texto-tenue);
+}
+.campo label span{ color:var(--dorado); }
+.campo input,
+.campo textarea{
+  width:100%;
+  padding:14px 16px;
+  font-family:inherit;
+  font-size:.97rem;
+  color:var(--blanco);
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--borde);
+  border-radius:10px;
+  transition:border-color var(--transicion), background var(--transicion);
+}
+.campo textarea{ min-height:112px; resize:vertical; }
+.campo input::placeholder,
+.campo textarea::placeholder{ color:rgba(255,255,255,.32); }
+.campo input:focus,
+.campo textarea:focus{
+  outline:none;
+  border-color:var(--dorado);
+  background:rgba(255,255,255,.06);
+}
+/* Ícono del calendario y la hora, visible sobre fondo oscuro */
+.campo input[type="date"],
+.campo input[type="time"]{ color-scheme:dark; }
+
+.formulario__pie{
+  margin-top:24px;
+  grid-column:1/-1;
+}
+/* Mensaje de confirmación posterior al envío */
+.formulario__aviso{
+  display:none;
+  align-items:flex-start;
+  gap:12px;
+  margin-top:18px;
+  padding:16px 18px;
+  font-size:.9rem;
+  background:rgba(200,164,77,.09);
+  border:1px solid var(--borde-dorado);
+  border-radius:10px;
+  color:var(--texto);
+}
+.formulario__aviso.visible{ display:flex; }
+.formulario__aviso .ico{ width:20px; height:20px; color:var(--dorado); margin-top:2px; }
+.formulario__aviso a{
+  color:var(--dorado);
+  font-weight:600;
+  text-decoration:underline;
+}
+
+/* ==========================================================================
+   11. PIE DE PÁGINA
+   ========================================================================== */
+.footer{
+  padding:70px 0 30px;
+  background:var(--negro);
+  border-top:1px solid var(--borde);
+}
+.footer__rejilla{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:48px;
+  padding-bottom:44px;
+}
+.footer__eslogan{
+  margin-top:18px;
+  max-width:330px;
+  font-size:.93rem;
+  color:var(--texto-tenue);
+}
+.footer h3{
+  margin-bottom:18px;
+  font-size:.78rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--dorado);
+}
+.footer__lista{ display:grid; gap:11px; font-size:.93rem; }
+.footer__lista a{
+  color:var(--texto-tenue);
+  transition:color var(--transicion), padding-left var(--transicion);
+}
+.footer__lista a:hover{ color:var(--dorado); padding-left:5px; }
+.footer__base{
+  padding-top:26px;
+  border-top:1px solid var(--borde);
+  text-align:center;
+  font-size:.85rem;
+  color:var(--texto-tenue);
+}
+
+/* ==========================================================================
+   12. BOTÓN FLOTANTE DE WHATSAPP
+   ========================================================================== */
+.whatsapp{
+  position:fixed;
+  right:22px; bottom:22px;
+  z-index:120;
+  display:inline-flex;
+  align-items:center;
+  gap:11px;
+  padding:14px 22px 14px 18px;
+  font-size:.92rem;
+  font-weight:600;
+  color:#fff;
+  background:#25D366;
+  border-radius:999px;
+  box-shadow:0 12px 32px rgba(37,211,102,.34);
+  transition:transform var(--transicion), box-shadow var(--transicion);
+}
+.whatsapp:hover{
+  transform:translateY(-4px) scale(1.03);
+  box-shadow:0 16px 40px rgba(37,211,102,.46);
+}
+.whatsapp .ico{ width:24px; height:24px; stroke-width:1.9; }
+/* Onda que llama la atención sin ser molesta */
+.whatsapp::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  border:2px solid rgba(37,211,102,.55);
+  animation:onda 2.6s ease-out infinite;
+}
+@keyframes onda{
+  0%  { transform:scale(1);    opacity:.7; }
+  100%{ transform:scale(1.28); opacity:0;  }
+}
+
+/* ==========================================================================
+   13. ESPACIOS RESERVADOS PARA FOTOS (se eliminan al poner las reales)
+   ========================================================================== */
+.ph{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  width:100%;
+  background:
+    linear-gradient(135deg, rgba(200,164,77,.05), transparent 60%),
+    linear-gradient(160deg, #262626, #131313);
+  border:1px dashed rgba(200,164,77,.22);
+  color:var(--texto-tenue);
+  text-align:center;
+}
+.ph__icono{
+  width:74px; height:auto;
+  fill:none;
+  stroke:rgba(200,164,77,.5);
+  stroke-width:1.4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.ph__texto{
+  padding:0 16px;
+  font-size:.78rem;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+/* ==========================================================================
+   14. ADAPTACIÓN A TABLET Y CELULAR
+   ========================================================================== */
+
+/* --- Tablet horizontal y laptops pequeñas --- */
+@media (max-width:1024px){
+  .nosotros__rejilla{ gap:48px; }
+  .contacto__rejilla{ grid-template-columns:1fr; gap:48px; }
+  .footer__rejilla{ grid-template-columns:1fr 1fr; gap:36px; }
+}
+
+/* --- Tablet vertical: aquí entra el menú hamburguesa --- */
+@media (max-width:900px){
+  .seccion{ padding:78px 0; }
+  .seccion__encabezado{ margin-bottom:46px; }
+
+  .nav__boton{ display:inline-flex; }
+
+  /* El menú pasa a ser un panel desplegable */
+  .nav{
+    position:fixed;
+    top:var(--alto-header); left:0; right:0;
+    max-height:0;
+    overflow:hidden;
+    background:rgba(15,15,15,.985);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid transparent;
+    transition:max-height .42s cubic-bezier(.4,0,.2,1), border-color .3s;
+  }
+  .nav.abierto{
+    max-height:calc(100vh - var(--alto-header));
+    border-bottom-color:var(--borde);
+  }
+  .nav__lista{
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    padding:12px 24px 30px;
+  }
+  .nav__lista li{ border-bottom:1px solid var(--borde); }
+  .nav__lista li:last-child{ border-bottom:none; }
+  .nav__enlace{
+    display:block;
+    padding:17px 0;
+    font-size:1rem;
+  }
+  .nav__enlace::after{ display:none; }
+  .nav__cta{ margin:22px 0 0; width:100%; }
+
+  /* Nosotros pasa a una sola columna, con la foto arriba */
+  .nosotros__rejilla{ grid-template-columns:1fr; gap:40px; }
+  .nosotros__marco{ order:-1; max-width:440px; margin:0 auto; }
+  .nosotros__marco img,
+  .nosotros__marco .ph{ aspect-ratio:4/3; }
+  .nosotros__marco::after{ display:none; }
+
+  .portada__datos{ gap:12px 24px; margin-top:40px; }
+  .formulario{ padding:30px 24px; }
+}
+
+/* --- Celular --- */
+@media (max-width:600px){
+  body{ font-size:16px; }
+  :root{ --alto-header:66px; }
+
+  .seccion{ padding:64px 0; }
+  .contenedor,.header__interior{ padding:0 18px; }
+
+  .portada{ min-height:92vh; text-align:left; }
+  .portada__botones{ flex-direction:column; align-items:stretch; }
+  .portada__botones .boton{ width:100%; }
+  .portada__indicador{ display:none; }
+
+  .rejilla-3{ grid-template-columns:1fr; gap:18px; }
+  .servicio{ padding:32px 26px; }
+  .galeria{ grid-template-columns:1fr; gap:16px; }
+
+  /* En celular el formulario va todo en una columna */
+  .formulario__rejilla{ grid-template-columns:1fr; }
+
+  .footer__rejilla{ grid-template-columns:1fr; gap:34px; text-align:center; }
+  .footer__eslogan{ margin-left:auto; margin-right:auto; }
+  .footer .linea-dorada--izq{ margin-left:auto; margin-right:auto; }
+
+  /* El botón de WhatsApp se reduce a solo el ícono */
+  .whatsapp{ right:16px; bottom:16px; padding:15px; }
+  .whatsapp span{ display:none; }
+
+  .visor{ padding:64px 12px; }
+  .visor__boton{ width:42px; height:42px; }
+  .visor__boton--ant{ left:10px; }
+  .visor__boton--sig{ right:10px; }
+}
+</style>
+</head>
+
+<body>
+<a class="salto-contenido" href="#inicio">Saltar al contenido principal</a>
+
+<!-- ==========================================================================
+     BIBLIOTECA DE ÍCONOS
+     Se declaran una sola vez y se reutilizan con <use href="#id">.
+     No es contenido visible.
+     ========================================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-avion" viewBox="0 0 24 24"><path d="M21.5 2.5 11 13M21.5 2.5l-6.6 19-3.9-8.5L2.5 9.1z"/></symbol>
+    <symbol id="i-maletin" viewBox="0 0 24 24"><rect x="2.8" y="7.5" width="18.4" height="12.5" rx="1.8"/><path d="M8.8 7.5V5.6a1.8 1.8 0 0 1 1.8-1.8h2.8a1.8 1.8 0 0 1 1.8 1.8v1.9M2.8 13h18.4"/></symbol>
+    <symbol id="i-usuario" viewBox="0 0 24 24"><circle cx="12" cy="7.8" r="3.6"/><path d="M5 20.5c0-3.9 3.1-7 7-7s7 3.1 7 7"/></symbol>
+    <symbol id="i-camara" viewBox="0 0 24 24"><path d="M3.6 7.8h3.2l1.6-2.2h7.2l1.6 2.2h3.2v11.4H3.6z"/><circle cx="12" cy="13.4" r="3.2"/></symbol>
+    <symbol id="i-calendario" viewBox="0 0 24 24"><rect x="3.2" y="5.4" width="17.6" height="15.4" rx="1.8"/><path d="M3.2 10.2h17.6M8.2 3v4.4M15.8 3v4.4"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.4s6.8-6.2 6.8-11a6.8 6.8 0 1 0-13.6 0c0 4.8 6.8 11 6.8 11z"/><circle cx="12" cy="10.2" r="2.4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.4l5 5.1L19.5 6.6"/></symbol>
+    <symbol id="i-estrella" viewBox="0 0 24 24"><path d="M12 2.4l3 6.2 6.8.9-4.9 4.8 1.2 6.7L12 17.8l-6.1 3.2 1.2-6.7L2.2 9.5l6.8-.9z"/></symbol>
+    <symbol id="i-telefono" viewBox="0 0 24 24"><rect x="6.8" y="2.2" width="10.4" height="19.6" rx="2.2"/><path d="M10.8 18.6h2.4"/></symbol>
+    <symbol id="i-correo" viewBox="0 0 24 24"><rect x="2.4" y="4.8" width="19.2" height="14.4" rx="1.8"/><path d="M3 6.2l9 6.6 9-6.6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.6a8.6 8.6 0 0 1-12.5 7.7L3 21.2l1.9-5.7A8.6 8.6 0 1 1 21 11.6z"/><path d="M8.8 11.6h.01M12 11.6h.01M15.2 11.6h.01"/></symbol>
+    <symbol id="i-reloj" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></symbol>
+    <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 2.8l7.6 3v5.6c0 4.8-3.2 8.6-7.6 10-4.4-1.4-7.6-5.2-7.6-10V5.8z"/><path d="M9.2 12l2.1 2.1 3.9-4"/></symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24"><path d="M3 16.4v-3.1l2-4.6a2 2 0 0 1 1.8-1.2h10.4a2 2 0 0 1 1.8 1.2l2 4.6v3.1z"/><path d="M5 12.6h14"/><circle cx="7.2" cy="16.6" r="1.7"/><circle cx="16.8" cy="16.6" r="1.7"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-flecha-abajo" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+    <symbol id="i-flecha-izq" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-flecha-der" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+
+    <!-- Silueta de vehículo para los espacios sin foto -->
+    <symbol id="ph-vehiculo" viewBox="0 0 120 60">
+      <path d="M8 42V30l7-14a6 6 0 0 1 5.4-3.4h48.2a6 6 0 0 1 4.6 2.2L86 30h18a8 8 0 0 1 8 8v4z"/>
+      <path d="M15 30h71"/><path d="M46 14v16"/>
+      <circle cx="30" cy="43" r="6"/><circle cx="92" cy="43" r="6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ==========================================================================
+     A. ENCABEZADO / MENÚ DE NAVEGACIÓN
+     ========================================================================== -->
+<header class="header" id="encabezado">
+  <div class="header__interior">
+
+    <a class="logo" href="#inicio" aria-label="OrcLuxuryTransport, ir al inicio">
+      <span class="logo__nombre">Orc<span>Luxury</span>Transport</span>
+      <span class="logo__bajada">Panamá</span>
+    </a>
+
+    <button class="nav__boton" id="boton-menu" aria-label="Abrir el menú de navegación"
+            aria-expanded="false" aria-controls="nav-principal">
+      <svg class="ico" id="icono-menu" aria-hidden="true"><use href="#i-menu"></use></svg>
+    </button>
+
+    <nav class="nav" id="nav-principal" aria-label="Navegación principal">
+      <ul class="nav__lista">
+        <li><a class="nav__enlace" href="#inicio">Inicio</a></li>
+        <li><a class="nav__enlace" href="#nosotros">Nosotros</a></li>
+        <li><a class="nav__enlace" href="#servicios">Servicios</a></li>
+        <li><a class="nav__enlace" href="#galeria">Galería</a></li>
+        <li><a class="nav__enlace" href="#contacto">Contacto</a></li>
+        <li><a class="boton boton--principal nav__cta" href="#contacto">Reservar</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<main>
+
+  <!-- ========================================================================
+       B. PORTADA
+       ======================================================================== -->
+  <section class="portada" id="inicio">
+    <!-- La foto de fondo se define en la variable --img-portada (sección 1 del CSS) -->
+    <div class="portada__fondo" role="img"
+         aria-label="Vehículo de transporte ejecutivo de OrcLuxuryTransport en Panamá"></div>
+    <div class="portada__capa"></div>
+
+    <div class="contenedor portada__contenido">
+      <span class="etiqueta">Transporte turístico y ejecutivo · Panamá</span>
+
+      <!-- NOTA: el documento original proponía "Transporte Ejecutivo de Lujo en
+           Panamá". Se ajustó al enfoque turístico. Para revertirlo, cambie
+           únicamente esta línea. -->
+      <h1>Transporte Turístico y <em>Ejecutivo</em> en Panamá</h1>
+
+      <p class="portada__subtitulo">
+        Puntualidad, seguridad y comodidad en cada viaje.
+      </p>
+
+      <div class="portada__botones">
+        <a class="boton boton--principal" href="#contacto">Reservar Ahora</a>
+        <a class="boton boton--contorno" href="#contacto">Contáctanos</a>
+      </div>
+
+      <ul class="portada__datos">
+        <li class="portada__dato">
+          <svg class="ico" aria-hidden="true"><use href="#i-avion"></use></svg>
+          Traslados al aeropuerto
+        </li>
+        <li class="portada__dato">
+          <svg class="ico" aria-hidden="true"><use href="#i-camara"></use></svg>
+          Recorridos turísticos
+        </li>
+        <li class="portada__dato">
+          <svg class="ico" aria-hidden="true"><use href="#i-reloj"></use></svg>
+          Disponibilidad 24/7
+        </li>
+      </ul>
+    </div>
+
+    <div class="portada__indicador" aria-hidden="true">
+      <svg class="ico"><use href="#i-flecha-abajo"></use></svg>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       C. NOSOTROS
+       ======================================================================== -->
+  <section class="seccion" id="nosotros">
+    <div class="contenedor nosotros__rejilla">
+
+      <div class="nosotros__texto revelar">
+        <span class="etiqueta">Quiénes somos</span>
+        <h2>¿Quiénes Somos?</h2>
+        <div class="linea-dorada linea-dorada--izq"></div>
+
+        <p style="margin-top:28px">
+          En <strong style="color:var(--blanco)">OrcLuxuryTransport</strong> nos dedicamos al
+          transporte turístico y ejecutivo en Panamá. Atendemos traslados al aeropuerto,
+          recorridos turísticos, movilización de grupos y servicio corporativo, con vehículos
+          cómodos y conductores profesionales que conocen el país.
+        </p>
+        <p>
+          Cada viaje se coordina con anticipación: confirmamos la hora, el punto de recogida y
+          el destino antes de salir, para que usted no tenga que preocuparse por nada más que
+          disfrutar el trayecto. Trabajamos con turistas, familias, empresas y visitantes que
+          llegan al país por primera vez.
+        </p>
+
+        <ul class="nosotros__lista">
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>
+            <span><strong>Cobertura en todo el país.</strong> Ciudad de Panamá, interior y destinos turísticos.</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>
+            <span><strong>Coordinación previa de cada viaje.</strong> Sin improvisaciones ni esperas.</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg>
+            <span><strong>Atención directa por WhatsApp.</strong> Respuesta en tiempo real, antes y durante el viaje.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="nosotros__marco revelar" style="--retraso:.14s">
+        <!-- REEMPLAZAR FOTO: descomente la línea de abajo, ponga la ruta real
+             y elimine el <div class="ph"> completo. -->
+        <!-- <img src="fotos/nosotros.jpg" alt="Conductor profesional de OrcLuxuryTransport junto al vehículo, listo para un traslado en Panamá"> -->
+        <div class="ph" role="img" aria-label="Espacio reservado para la fotografía de la sección Quiénes Somos">
+          <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+          <span class="ph__texto">Foto · Vehículo o conductor</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       D. SERVICIOS
+       ======================================================================== -->
+  <section class="seccion seccion--alterna" id="servicios">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">Nuestros servicios</span>
+        <h2>Un servicio para cada tipo de viaje</h2>
+        <p>Desde la llegada al aeropuerto hasta recorridos de varios días por el interior del país.</p>
+        <div class="linea-dorada"></div>
+      </div>
+
+      <div class="rejilla-3">
+
+        <article class="servicio revelar">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-avion"></use></svg></span>
+          <h3>Traslados al Aeropuerto</h3>
+          <p>Recogida y entrega en Tocumen y Albrook con seguimiento del vuelo. Lo esperamos aunque el vuelo se retrase.</p>
+        </article>
+
+        <article class="servicio revelar" style="--retraso:.08s">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-maletin"></use></svg></span>
+          <h3>Transporte Corporativo</h3>
+          <p>Movilización de ejecutivos y personal entre reuniones, hoteles y oficinas, con horarios coordinados.</p>
+        </article>
+
+        <article class="servicio revelar" style="--retraso:.16s">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-usuario"></use></svg></span>
+          <h3>Servicio Privado</h3>
+          <p>Vehículo y conductor asignados exclusivamente a usted durante todo el trayecto o la jornada completa.</p>
+        </article>
+
+        <article class="servicio revelar">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-camara"></use></svg></span>
+          <h3>Turismo y Recorridos</h3>
+          <p>Casco Antiguo, Canal de Panamá, playas y montaña. Rutas armadas según el tiempo del que disponga.</p>
+        </article>
+
+        <article class="servicio revelar" style="--retraso:.08s">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-calendario"></use></svg></span>
+          <h3>Eventos Especiales</h3>
+          <p>Bodas, congresos, graduaciones y celebraciones, con transporte puntual para invitados y grupos.</p>
+        </article>
+
+        <article class="servicio revelar" style="--retraso:.16s">
+          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg></span>
+          <h3>Viajes Personalizados</h3>
+          <p>¿Necesita una ruta que no está en la lista? Cuéntenos su itinerario y lo organizamos a su medida.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       E. POR QUÉ ELEGIRNOS
+       ======================================================================== -->
+  <section class="seccion beneficios" id="beneficios">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">Por qué elegirnos</span>
+        <h2>Lo que puede esperar de nosotros</h2>
+        <div class="linea-dorada"></div>
+      </div>
+
+      <div class="rejilla-3">
+
+        <article class="beneficio revelar">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Puntualidad</h3><p>Llegamos antes de la hora acordada. Su tiempo manda.</p></div>
+        </article>
+
+        <article class="beneficio revelar" style="--retraso:.06s">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Seguridad</h3><p>Unidades revisadas y conducción responsable en todo momento.</p></div>
+        </article>
+
+        <article class="beneficio revelar" style="--retraso:.12s">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Vehículos Cómodos y Equipados</h3><p>Aire acondicionado, espacio para equipaje y limpieza impecable.</p></div>
+        </article>
+
+        <article class="beneficio revelar">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Conductores Profesionales</h3><p>Personal con experiencia, buen trato y conocimiento de las rutas.</p></div>
+        </article>
+
+        <article class="beneficio revelar" style="--retraso:.06s">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Atención Personalizada</h3><p>Coordinamos cada detalle con usted, no con un sistema automático.</p></div>
+        </article>
+
+        <article class="beneficio revelar" style="--retraso:.12s">
+          <span class="beneficio__check"><svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          <div><h3>Disponibilidad 24/7</h3><p>Vuelos de madrugada, salidas de fin de semana y feriados incluidos.</p></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       F. GALERÍA
+       Al hacer clic en cualquier imagen se abre el visor a pantalla completa.
+       ======================================================================== -->
+  <section class="seccion" id="galeria">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">Galería</span>
+        <h2>Nuestros vehículos y recorridos</h2>
+        <p>Toque cualquier imagen para verla en tamaño completo.</p>
+        <div class="linea-dorada"></div>
+        <p class="nota-preview">
+          Los seis espacios muestran dónde irán las fotografías reales de la flota.
+        </p>
+      </div>
+
+      <!-- ---------------------------------------------------------------------
+           REEMPLAZAR FOTO (×6): en cada bloque, descomente la línea de <img>,
+           ponga la ruta de la foto real y elimine el <div class="ph">.
+           Recomendado: fotos horizontales de 1600 px de ancho.
+           --------------------------------------------------------------------- -->
+      <div class="galeria" id="galeria">
+
+        <figure class="galeria__item revelar" tabindex="0" role="button"
+                aria-label="Ampliar imagen: flota de vehículos">
+          <!-- <img src="fotos/flota.jpg" alt="Flota de vehículos de OrcLuxuryTransport en Panamá"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto de la flota de vehículos">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Nuestra flota</span>
+          </div>
+          <figcaption class="galeria__pie">Nuestra flota</figcaption>
+        </figure>
+
+        <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
+                aria-label="Ampliar imagen: interior del vehículo">
+          <!-- <img src="fotos/interior.jpg" alt="Interior cómodo y limpio de uno de los vehículos"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto del interior del vehículo">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Interior del vehículo</span>
+          </div>
+          <figcaption class="galeria__pie">Interior del vehículo</figcaption>
+        </figure>
+
+        <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
+                aria-label="Ampliar imagen: traslado al aeropuerto">
+          <!-- <img src="fotos/aeropuerto.jpg" alt="Traslado de pasajeros al Aeropuerto Internacional de Tocumen"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto de traslado al aeropuerto">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Traslado al aeropuerto</span>
+          </div>
+          <figcaption class="galeria__pie">Traslados al aeropuerto</figcaption>
+        </figure>
+
+        <figure class="galeria__item revelar" tabindex="0" role="button"
+                aria-label="Ampliar imagen: recorrido turístico">
+          <!-- <img src="fotos/turismo.jpg" alt="Recorrido turístico por el Casco Antiguo de la Ciudad de Panamá"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto de recorrido turístico">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Recorrido turístico</span>
+          </div>
+          <figcaption class="galeria__pie">Recorridos turísticos</figcaption>
+        </figure>
+
+        <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
+                aria-label="Ampliar imagen: servicio corporativo">
+          <!-- <img src="fotos/corporativo.jpg" alt="Vehículo ejecutivo esperando a un cliente corporativo"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto de servicio corporativo">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Servicio corporativo</span>
+          </div>
+          <figcaption class="galeria__pie">Servicio corporativo</figcaption>
+        </figure>
+
+        <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
+                aria-label="Ampliar imagen: transporte de grupos">
+          <!-- <img src="fotos/grupos.jpg" alt="Transporte de grupos y familias en vehículo amplio"> -->
+          <div class="ph" role="img" aria-label="Espacio reservado para foto de transporte de grupos">
+            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
+            <span class="ph__texto">Foto · Grupos y familias</span>
+          </div>
+          <figcaption class="galeria__pie">Grupos y familias</figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       G. TESTIMONIOS
+
+       >>> TESTIMONIOS DE EJEMPLO <<<
+       Los tres textos siguientes son de muestra, escritos únicamente para
+       mostrar el diseño. DEBEN reemplazarse por testimonios reales de clientes
+       antes de publicar el sitio.
+       ======================================================================== -->
+  <section class="seccion seccion--alterna" id="testimonios">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">Testimonios</span>
+        <h2>Lo que dicen nuestros clientes</h2>
+        <div class="linea-dorada"></div>
+        <p class="nota-preview">
+          Los tres textos de abajo son de muestra, escritos solo para mostrar el diseño de
+          esta sección. Se reemplazarán por opiniones reales de clientes.
+        </p>
+      </div>
+
+      <div class="rejilla-3">
+
+        <article class="testimonio revelar">
+          <span class="marca-ejemplo">Texto de ejemplo</span>
+          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+          </div>
+          <blockquote>
+            Nos recogieron en Tocumen a las cinco de la mañana y el conductor ya estaba
+            esperando cuando salimos. El vehículo impecable y el trato excelente. Los
+            volvimos a contratar para el regreso.
+          </blockquote>
+          <div class="testimonio__autor">
+            <span class="testimonio__inicial" aria-hidden="true">M</span>
+            <div>
+              <span class="testimonio__nombre">Nombre del cliente</span>
+              <span class="testimonio__detalle">Traslado al aeropuerto</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonio revelar" style="--retraso:.08s">
+          <span class="marca-ejemplo">Texto de ejemplo</span>
+          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+          </div>
+          <blockquote>
+            Contratamos el servicio para movilizar a un grupo de visitantes durante tres días.
+            Todo coordinado por WhatsApp, sin un solo retraso. Muy recomendados para empresas.
+          </blockquote>
+          <div class="testimonio__autor">
+            <span class="testimonio__inicial" aria-hidden="true">C</span>
+            <div>
+              <span class="testimonio__nombre">Nombre del cliente</span>
+              <span class="testimonio__detalle">Transporte corporativo</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonio revelar" style="--retraso:.16s">
+          <span class="marca-ejemplo">Texto de ejemplo</span>
+          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+          </div>
+          <blockquote>
+            Hicimos el recorrido por el Casco Antiguo y el Canal. El conductor conocía la
+            historia de cada lugar y nos ajustó la ruta cuando quisimos quedarnos más tiempo.
+          </blockquote>
+          <div class="testimonio__autor">
+            <span class="testimonio__inicial" aria-hidden="true">A</span>
+            <div>
+              <span class="testimonio__nombre">Nombre del cliente</span>
+              <span class="testimonio__detalle">Recorrido turístico</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       H. CONTACTO Y FORMULARIO DE RESERVA
+       El formulario NO envía correos: arma el mensaje y abre WhatsApp.
+       ======================================================================== -->
+  <section class="seccion" id="contacto">
+    <div class="contenedor contacto__rejilla">
+
+      <!-- Columna izquierda: datos directos -->
+      <div class="revelar">
+        <span class="etiqueta">Contacto</span>
+        <h2>Reserve su viaje</h2>
+        <div class="linea-dorada linea-dorada--izq"></div>
+
+        <p style="margin-top:26px">
+          Llene el formulario y su solicitud llegará directamente a nuestro WhatsApp, o
+          escríbanos ahora mismo si prefiere resolverlo en el momento.
+        </p>
+
+        <div class="contacto__datos">
+          <a class="dato" href="tel:+50768026916">
+            <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-telefono"></use></svg></span>
+            <span>
+              <span class="dato__etiqueta">Teléfono</span>
+              <span class="dato__valor">6802-6916</span>
+            </span>
+          </a>
+          <a class="dato" href="mailto:orielca507@gmail.com">
+            <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-correo"></use></svg></span>
+            <span>
+              <span class="dato__etiqueta">Correo</span>
+              <span class="dato__valor">orielca507@gmail.com</span>
+            </span>
+          </a>
+          <div class="dato">
+            <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-reloj"></use></svg></span>
+            <span>
+              <span class="dato__etiqueta">Horario</span>
+              <span class="dato__valor">24 horas, todos los días</span>
+            </span>
+          </div>
+        </div>
+
+        <a class="boton boton--contorno" id="whatsapp-directo" href="#" target="_blank" rel="noopener">
+          <svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>
+          Escribir por WhatsApp
+        </a>
+      </div>
+
+      <!-- Columna derecha: formulario -->
+      <div class="revelar" style="--retraso:.12s">
+        <form class="formulario" id="form-reserva" novalidate>
+          <h3 class="formulario__titulo">Solicitud de Reserva</h3>
+          <p class="formulario__nota">
+            Los campos marcados con <span style="color:var(--dorado)">*</span> son obligatorios.
+            Al enviar, se abrirá WhatsApp con su solicitud lista para confirmar.
+          </p>
+
+          <div class="formulario__rejilla">
+
+            <div class="campo campo--completo">
+              <label for="f-nombre">Nombre completo <span>*</span></label>
+              <input type="text" id="f-nombre" name="nombre" required
+                     autocomplete="name" placeholder="Su nombre y apellido">
+            </div>
+
+            <div class="campo">
+              <label for="f-correo">Correo electrónico</label>
+              <input type="email" id="f-correo" name="correo"
+                     autocomplete="email" placeholder="correo@ejemplo.com">
+            </div>
+
+            <div class="campo">
+              <label for="f-telefono">Teléfono <span>*</span></label>
+              <input type="tel" id="f-telefono" name="telefono" required
+                     autocomplete="tel" placeholder="6000-0000">
+            </div>
+
+            <div class="campo">
+              <label for="f-fecha">Fecha del viaje <span>*</span></label>
+              <input type="date" id="f-fecha" name="fecha" required>
+            </div>
+
+            <div class="campo">
+              <label for="f-hora">Hora <span>*</span></label>
+              <input type="time" id="f-hora" name="hora" required>
+            </div>
+
+            <div class="campo">
+              <label for="f-recogida">Lugar de recogida <span>*</span></label>
+              <input type="text" id="f-recogida" name="recogida" required
+                     placeholder="Hotel, dirección o terminal">
+            </div>
+
+            <div class="campo">
+              <label for="f-destino">Destino <span>*</span></label>
+              <input type="text" id="f-destino" name="destino" required
+                     placeholder="¿Hacia dónde va?">
+            </div>
+
+            <div class="campo campo--completo">
+              <label for="f-mensaje">Mensaje o detalles adicionales</label>
+              <textarea id="f-mensaje" name="mensaje"
+                        placeholder="Cantidad de pasajeros, equipaje, número de vuelo, paradas..."></textarea>
+            </div>
+
+            <div class="formulario__pie">
+              <button class="boton boton--principal boton--ancho" type="submit">
+                <svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>
+                Solicitar Reserva
+              </button>
+
+              <!-- Mensaje que aparece después de enviar -->
+              <div class="formulario__aviso" id="aviso-form" role="status" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ==========================================================================
+     I. PIE DE PÁGINA
+     ========================================================================== -->
+<footer class="footer">
+  <div class="contenedor">
+
+    <div class="footer__rejilla">
+
+      <div>
+        <span class="logo__nombre" style="font-size:1.3rem;font-weight:700">
+          Orc<span style="color:var(--dorado)">Luxury</span>Transport
+        </span>
+        <div class="linea-dorada linea-dorada--izq" style="margin-top:14px"></div>
+        <p class="footer__eslogan">
+          Transporte turístico y ejecutivo en Panamá. Puntualidad, seguridad y comodidad
+          en cada viaje.
+        </p>
+      </div>
+
+      <div>
+        <h3>Secciones</h3>
+        <ul class="footer__lista">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contacto</h3>
+        <ul class="footer__lista">
+          <li><a href="tel:+50768026916">6802-6916</a></li>
+          <li><a href="mailto:orielca507@gmail.com">orielca507@gmail.com</a></li>
+          <li><a id="whatsapp-footer" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li style="color:var(--texto-tenue)">Panamá · 24/7</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer__base">
+      &copy; <span id="anio">2026</span> OrcLuxuryTransport. Todos los derechos reservados.
+    </div>
+
+  </div>
+</footer>
+
+<!-- Botón flotante de WhatsApp -->
+<a class="whatsapp" id="whatsapp-flotante" href="#" target="_blank" rel="noopener"
+   aria-label="Escribir por WhatsApp a OrcLuxuryTransport">
+  <svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>
+  <span>WhatsApp</span>
+</a>
+
+<!-- Visor de imágenes a pantalla completa -->
+<div class="visor" id="visor" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+  <button class="visor__boton visor__boton--cerrar" id="visor-cerrar" aria-label="Cerrar el visor">
+    <svg class="ico" aria-hidden="true"><use href="#i-cerrar"></use></svg>
+  </button>
+  <button class="visor__boton visor__boton--ant" id="visor-ant" aria-label="Imagen anterior">
+    <svg class="ico" aria-hidden="true"><use href="#i-flecha-izq"></use></svg>
+  </button>
+  <div class="visor__medio" id="visor-medio"></div>
+  <button class="visor__boton visor__boton--sig" id="visor-sig" aria-label="Imagen siguiente">
+    <svg class="ico" aria-hidden="true"><use href="#i-flecha-der"></use></svg>
+  </button>
+  <p class="visor__titulo" id="visor-titulo"></p>
+</div>
+
+<script>
+/* ==========================================================================
+   1. CONFIGURACIÓN — lo único que normalmente hay que cambiar
+   ========================================================================== */
+var CONFIG = {
+
+  /* Número de WhatsApp que recibe las reservas.
+     FORMATO OBLIGATORIO: código de país + número, sin espacios, guiones ni "+".
+     Panamá = 507. El número 6802-6916 queda así: */
+  whatsapp: "50768026916",
+
+  /* Mensaje del botón flotante y del enlace directo */
+  mensajeDirecto: "Hola, deseo solicitar información sobre sus servicios de transporte ejecutivo.",
+
+  /* Encabezado del mensaje que arma el formulario de reserva */
+  encabezadoReserva: "Hola OrcLuxuryTransport, deseo solicitar una reserva."
+};
+
+/* Construye un enlace de WhatsApp a partir de un texto */
+function enlaceWhatsApp(texto){
+  return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(texto);
+}
+
+/* Marca que JavaScript está activo. Si estuviera desactivado, las animaciones
+   de aparición no se aplican y el contenido se ve normalmente. */
+document.documentElement.classList.add("js");
+
+
+/* ==========================================================================
+   2. ENLACES DE WHATSAPP (flotante, footer y botón de contacto)
+   ========================================================================== */
+(function(){
+  var url = enlaceWhatsApp(CONFIG.mensajeDirecto);
+  var ids = ["whatsapp-flotante","whatsapp-directo","whatsapp-footer"];
+  for(var i=0;i<ids.length;i++){
+    var el = document.getElementById(ids[i]);
+    if(el){ el.href = url; }
+  }
+})();
+
+
+/* ==========================================================================
+   3. MENÚ EN CELULAR (abrir / cerrar)
+   ========================================================================== */
+(function(){
+  var boton = document.getElementById("boton-menu");
+  var nav   = document.getElementById("nav-principal");
+  var icono = document.getElementById("icono-menu");
+  if(!boton || !nav) return;
+
+  function cerrar(){
+    nav.classList.remove("abierto");
+    boton.setAttribute("aria-expanded","false");
+    boton.setAttribute("aria-label","Abrir el menú de navegación");
+    icono.innerHTML = '<use href="#i-menu"></use>';
+  }
+
+  boton.addEventListener("click", function(){
+    var abierto = nav.classList.toggle("abierto");
+    boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+    boton.setAttribute("aria-label", abierto ? "Cerrar el menú de navegación"
+                                            : "Abrir el menú de navegación");
+    icono.innerHTML = '<use href="#i-' + (abierto ? "cerrar" : "menu") + '"></use>';
+  });
+
+  /* Al tocar una opción, el menú se cierra solo */
+  var enlaces = nav.querySelectorAll("a");
+  for(var i=0;i<enlaces.length;i++){
+    enlaces[i].addEventListener("click", cerrar);
+  }
+
+  /* Tecla Escape */
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && nav.classList.contains("abierto")) cerrar();
+  });
+})();
+
+
+/* ==========================================================================
+   4. ENCABEZADO: fondo al bajar + resaltado de la sección actual
+   ========================================================================== */
+(function(){
+  var header    = document.getElementById("encabezado");
+  var enlaces   = document.querySelectorAll(".nav__enlace");
+  var secciones = [];
+
+  for(var i=0;i<enlaces.length;i++){
+    var destino = document.querySelector(enlaces[i].getAttribute("href"));
+    if(destino) secciones.push({ enlace:enlaces[i], seccion:destino });
+  }
+
+  function actualizar(){
+    /* Fondo sólido en cuanto se baja un poco */
+    if(window.scrollY > 60) header.classList.add("fijo");
+    else                    header.classList.remove("fijo");
+
+    /* Marca en el menú la sección que se está viendo */
+    var limite = window.scrollY + window.innerHeight * 0.35;
+    var actual = null;
+    for(var i=0;i<secciones.length;i++){
+      if(secciones[i].seccion.offsetTop <= limite) actual = secciones[i];
+    }
+    for(var j=0;j<secciones.length;j++){
+      secciones[j].enlace.classList.toggle("activo", secciones[j] === actual);
+    }
+  }
+
+  /* Se limita la frecuencia de cálculo para no afectar el rendimiento */
+  var esperando = false;
+  window.addEventListener("scroll", function(){
+    if(esperando) return;
+    esperando = true;
+    window.requestAnimationFrame(function(){ actualizar(); esperando = false; });
+  }, { passive:true });
+
+  actualizar();
+})();
+
+
+/* ==========================================================================
+   5. APARICIÓN PROGRESIVA AL BAJAR (scroll reveal)
+   ========================================================================== */
+(function(){
+  var elementos = document.querySelectorAll(".revelar");
+
+  /* Si el navegador es antiguo y no soporta IntersectionObserver,
+     se muestra todo de una vez. */
+  if(!("IntersectionObserver" in window)){
+    for(var i=0;i<elementos.length;i++) elementos[i].classList.add("visible");
+    return;
+  }
+
+  var observador = new IntersectionObserver(function(entradas){
+    entradas.forEach(function(entrada){
+      if(entrada.isIntersecting){
+        entrada.target.classList.add("visible");
+        observador.unobserve(entrada.target);   /* Se anima una sola vez */
+      }
+    });
+  }, { threshold:0, rootMargin:"0px 0px -70px 0px" });
+
+  for(var k=0;k<elementos.length;k++) observador.observe(elementos[k]);
+
+  /* Respaldo de seguridad: al terminar de cargar, se muestra todo lo que ya
+     esté a la vista. Garantiza que el contenido nunca quede invisible, incluso
+     si el navegador retrasa la primera notificación del observador. */
+  window.addEventListener("load", function(){
+    setTimeout(function(){
+      for(var n=0;n<elementos.length;n++){
+        var r = elementos[n].getBoundingClientRect();
+        if(r.top < window.innerHeight && r.bottom > 0) elementos[n].classList.add("visible");
+      }
+    }, 350);
+  });
+})();
+
+
+/* ==========================================================================
+   6. GALERÍA: VISOR A PANTALLA COMPLETA (LIGHTBOX)
+   ========================================================================== */
+(function(){
+  var galeria = document.getElementById("galeria");
+  var visor   = document.getElementById("visor");
+  var medio   = document.getElementById("visor-medio");
+  var titulo  = document.getElementById("visor-titulo");
+  if(!galeria || !visor) return;
+
+  var items   = galeria.querySelectorAll(".galeria__item");
+  var indice  = 0;
+  var previo  = null;   /* Elemento que tenía el foco antes de abrir */
+
+  /* Muestra en el visor el contenido de la imagen indicada.
+     Funciona tanto con fotos reales (<img>) como con los espacios reservados. */
+  function mostrar(i){
+    if(i < 0) i = items.length - 1;
+    if(i >= items.length) i = 0;
+    indice = i;
+
+    var item   = items[indice];
+    var fuente = item.querySelector("img, .ph");
+    var pie    = item.querySelector(".galeria__pie");
+
+    medio.innerHTML = "";
+    if(fuente) medio.appendChild(fuente.cloneNode(true));
+    titulo.textContent = (pie ? pie.textContent.trim() : "")
+                       + "  ·  " + (indice + 1) + " de " + items.length;
+  }
+
+  function abrir(i){
+    previo = document.activeElement;
+    mostrar(i);
+    visor.classList.add("abierto");
+    document.body.style.overflow = "hidden";      /* Evita el doble desplazamiento */
+    document.getElementById("visor-cerrar").focus();
+  }
+
+  function cerrar(){
+    visor.classList.remove("abierto");
+    document.body.style.overflow = "";
+    medio.innerHTML = "";
+    if(previo) previo.focus();
+  }
+
+  /* Apertura por clic y por teclado (Enter o barra espaciadora) */
+  for(var i=0;i<items.length;i++){
+    (function(n){
+      items[n].addEventListener("click", function(){ abrir(n); });
+      items[n].addEventListener("keydown", function(e){
+        if(e.key === "Enter" || e.key === " "){ e.preventDefault(); abrir(n); }
+      });
+    })(i);
+  }
+
+  document.getElementById("visor-cerrar").addEventListener("click", cerrar);
+  document.getElementById("visor-ant").addEventListener("click", function(){ mostrar(indice - 1); });
+  document.getElementById("visor-sig").addEventListener("click", function(){ mostrar(indice + 1); });
+
+  /* Clic sobre el fondo oscuro cierra el visor */
+  visor.addEventListener("click", function(e){ if(e.target === visor) cerrar(); });
+
+  /* Teclado: Escape cierra, flechas navegan */
+  document.addEventListener("keydown", function(e){
+    if(!visor.classList.contains("abierto")) return;
+    if(e.key === "Escape")     cerrar();
+    if(e.key === "ArrowLeft")  mostrar(indice - 1);
+    if(e.key === "ArrowRight") mostrar(indice + 1);
+  });
+})();
+
+
+/* ==========================================================================
+   7. FORMULARIO DE RESERVA → WHATSAPP
+
+   El formulario no envía correos ni necesita servidor: valida los datos,
+   arma un mensaje ordenado y abre WhatsApp con el texto listo para enviar.
+   ========================================================================== */
+(function(){
+  var form  = document.getElementById("form-reserva");
+  var aviso = document.getElementById("aviso-form");
+  var campoFecha = document.getElementById("f-fecha");
+  if(!form) return;
+
+  /* --- No se permite escoger una fecha ya pasada --- */
+  if(campoFecha){
+    var hoy = new Date();
+    var mes = String(hoy.getMonth() + 1).padStart(2,"0");
+    var dia = String(hoy.getDate()).padStart(2,"0");
+    campoFecha.min = hoy.getFullYear() + "-" + mes + "-" + dia;
+  }
+
+  /* --- Fecha 2026-03-14  ->  14/03/2026 --- */
+  function formatearFecha(valor){
+    if(!valor) return "";
+    var p = valor.split("-");
+    return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : valor;
+  }
+
+  /* --- Hora 14:30  ->  2:30 p.m. --- */
+  function formatearHora(valor){
+    if(!valor) return "";
+    var p = valor.split(":");
+    var h = parseInt(p[0],10);
+    var sufijo = h >= 12 ? "p.m." : "a.m.";
+    var h12 = h % 12; if(h12 === 0) h12 = 12;
+    return h12 + ":" + p[1] + " " + sufijo;
+  }
+
+  /* --- Muestra el mensaje de estado bajo el botón --- */
+  function mostrarAviso(html){
+    aviso.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-check"></use></svg><span>'
+                    + html + "</span>";
+    aviso.classList.add("visible");
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    /* --- Validación de los campos obligatorios --- */
+    var obligatorios = form.querySelectorAll("[required]");
+    for(var i=0;i<obligatorios.length;i++){
+      if(!obligatorios[i].value.trim()){
+        obligatorios[i].focus();
+        aviso.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-cerrar"></use></svg>'
+                        + "<span>Falta completar un campo obligatorio.</span>";
+        aviso.classList.add("visible");
+        return;
+      }
+    }
+
+    var datos = new FormData(form);
+    function v(campo){ return (datos.get(campo) || "").toString().trim(); }
+
+    /* --- Armado del mensaje --- */
+    var lineas = [
+      CONFIG.encabezadoReserva,
+      "",
+      "*Nombre:* "   + v("nombre"),
+      "*Teléfono:* " + v("telefono")
+    ];
+    if(v("correo")) lineas.push("*Correo:* " + v("correo"));
+    lineas.push(
+      "*Fecha:* "    + formatearFecha(v("fecha")),
+      "*Hora:* "     + formatearHora(v("hora")),
+      "*Recogida:* " + v("recogida"),
+      "*Destino:* "  + v("destino")
+    );
+    if(v("mensaje")) lineas.push("", "*Detalles:* " + v("mensaje"));
+
+    var url = enlaceWhatsApp(lineas.join("\n"));
+
+    /* --- Apertura de WhatsApp, con respaldo si el navegador bloquea la ventana --- */
+    var ventana = window.open(url, "_blank", "noopener");
+    if(!ventana){ window.location.href = url; }
+
+    mostrarAviso('Abriendo WhatsApp con su solicitud. Si no se abrió, '
+               + '<a href="' + url + '" target="_blank" rel="noopener">toque aquí</a>.');
+  });
+})();
+
+
+/* ==========================================================================
+   8. AÑO DEL PIE DE PÁGINA (se actualiza solo cada año)
+   ========================================================================== */
+(function(){
+  var anio = document.getElementById("anio");
+  if(anio) anio.textContent = new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
