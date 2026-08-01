@@ -131,6 +131,10 @@ body{
 }
 
 img,svg{ display:block; max-width:100%; }
+/* Las <img> llevan atributos width/height para que el navegador reserve el
+   espacio antes de cargar y la página no dé saltos. height:auto evita que
+   esa altura fija se imponga sobre la proporción definida en el CSS. */
+img{ height:auto; }
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; color:inherit; cursor:pointer; }
 ul{ margin:0; padding:0; list-style:none; }
@@ -522,7 +526,7 @@ p:last-child{ margin-bottom:0; }
 .nosotros__marco .ph{
   border-radius:var(--radio);
   box-shadow:var(--sombra);
-  aspect-ratio:4/5;
+  aspect-ratio:4/3;
   object-fit:cover;
   width:100%;
 }
@@ -645,12 +649,12 @@ p:last-child{ margin-bottom:0; }
   transform:translateY(-6px);
   border-color:var(--borde-dorado);
 }
-/* Formato vertical 3:4 — es el formato nativo de todas las fotografías,
-   así que se muestran completas, sin recortes que corten a los sujetos. */
+/* Formato horizontal 4:3. Los originales son verticales, así que cada
+   recorte se encuadró a mano para centrar el motivo de cada foto. */
 .galeria__item img,
 .galeria__item .ph{
   width:100%;
-  aspect-ratio:3/4;
+  aspect-ratio:4/3;
   object-fit:cover;
   transition:transform .6s cubic-bezier(.4,0,.2,1);
 }
@@ -1279,7 +1283,7 @@ p:last-child{ margin-bottom:0; }
       </div>
 
       <div class="nosotros__marco revelar" style="--retraso:.14s">
-        <img src="fotos/nosotros.webp" width="1000" height="1250" loading="lazy" decoding="async"
+        <img src="fotos/nosotros.webp" width="1200" height="900" loading="lazy" decoding="async"
              alt="Vehículo de OrcLuxuryTransport, una minivan blanca de siete plazas lista para un traslado en Panamá">
       </div>
 
@@ -1406,48 +1410,48 @@ p:last-child{ margin-bottom:0; }
       <!-- ---------------------------------------------------------------------
            Para cambiar una foto: reemplace el archivo dentro de la carpeta
            /fotos manteniendo el mismo nombre, o edite el atributo src.
-           Formato: vertical 3:4 (900 x 1200 px), en WebP.
+           Formato: horizontal 4:3 (1200 x 900 px), en WebP.
            --------------------------------------------------------------------- -->
       <div class="galeria" id="galeria">
 
         <figure class="galeria__item revelar" tabindex="0" role="button"
                 aria-label="Ampliar imagen: Canal de Panamá">
-          <img src="fotos/g1-canal.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g1-canal.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Buque de carga atravesando las esclusas del Canal de Panamá">
           <figcaption class="galeria__pie">Canal de Panamá</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
                 aria-label="Ampliar imagen: Casco Antiguo">
-          <img src="fotos/g2-casco.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g2-casco.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Calle del Casco Antiguo de la Ciudad de Panamá decorada con sombreros de colores">
           <figcaption class="galeria__pie">Casco Antiguo</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
                 aria-label="Ampliar imagen: fauna silvestre">
-          <img src="fotos/g3-fauna.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g3-fauna.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Monos capuchinos en su hábitat natural durante un recorrido por la selva panameña">
           <figcaption class="galeria__pie">Fauna silvestre</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" tabindex="0" role="button"
                 aria-label="Ampliar imagen: cascadas y naturaleza">
-          <img src="fotos/g4-cascadas.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g4-cascadas.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Cascada en el interior de Panamá, uno de los destinos de nuestros recorridos">
           <figcaption class="galeria__pie">Cascadas y naturaleza</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
                 aria-label="Ampliar imagen: arquitectura colonial">
-          <img src="fotos/g5-colonial.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g5-colonial.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Fachada de piedra de una iglesia colonial en el Casco Antiguo de Panamá">
           <figcaption class="galeria__pie">Arquitectura colonial</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
                 aria-label="Ampliar imagen: gastronomía típica">
-          <img src="fotos/g6-gastronomia.webp" width="900" height="1200" loading="lazy" decoding="async"
+          <img src="fotos/g6-gastronomia.webp" width="1200" height="900" loading="lazy" decoding="async"
                alt="Plato de comida típica panameña servido durante un recorrido gastronómico">
           <figcaption class="galeria__pie">Gastronomía típica</figcaption>
         </figure>
