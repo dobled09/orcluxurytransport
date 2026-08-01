@@ -7,11 +7,13 @@
 
   GUÍA RÁPIDA DE EDICIÓN (todo se edita en este mismo archivo)
 
-  1. FOTOS ....... Busque los comentarios "REEMPLAZAR FOTO". Cada espacio tiene
-                   la línea de <img> ya escrita y comentada: se descomenta, se
-                   pone la ruta de la foto real y se borra el <div class="ph">.
-                   La foto de portada se cambia en la variable --img-portada
-                   (dentro de <style>, sección 1).
+  1. FOTOS ....... Están en la carpeta /fotos, en formato WebP. Para cambiar
+                   cualquiera, reemplace el archivo conservando el mismo nombre.
+                   La portada son dos versiones: portada.webp (escritorio) y
+                   portada-movil.webp (celular). social.webp es la imagen que
+                   aparece al compartir el enlace por WhatsApp.
+                   IMPORTANTE: el sitio ya no es un archivo único. Al subirlo
+                   hay que llevar index.html y la carpeta /fotos juntos.
 
   2. WHATSAPP .... Sección 1 del <script>, constante CONFIG.whatsapp.
                    Formato obligatorio: código de país + número, sin espacios
@@ -45,8 +47,10 @@
   <meta property="og:title" content="Transporte Turístico y Ejecutivo en Panamá | OrcLuxuryTransport">
   <meta property="og:description" content="Traslados al aeropuerto, recorridos turísticos y transporte corporativo en Panamá. Puntualidad, seguridad y comodidad en cada viaje.">
   <meta property="og:url" content="https://orcluxurytransport.com/">
-  <!-- REEMPLAZAR FOTO: imagen que se muestra al compartir el enlace (1200x630 px) -->
-  <!-- <meta property="og:image" content="https://orcluxurytransport.com/fotos/portada-social.jpg"> -->
+  <!-- Imagen que se muestra al compartir el enlace por WhatsApp o redes -->
+  <meta property="og:image" content="https://orcluxurytransport.com/fotos/social.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Ícono de la pestaña del navegador -->
@@ -102,11 +106,10 @@
   /* Tipografía */
   --fuente: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  /* ---- FOTO DE PORTADA -------------------------------------------------
-     REEMPLAZAR FOTO: cambie el valor por  url("fotos/portada.jpg")
-     Recomendado: foto horizontal, mínimo 1920 px de ancho.
-     Mientras no haya foto real, se muestra un fondo degradado.            */
-  --img-portada: linear-gradient(125deg,#1b1b1b 0%,#0F0F0F 45%,#242424 100%);
+  /* ---- FOTO DE PORTADA ---------------------------------------------------
+     Versión ancha para escritorio. En celular se sustituye por la versión
+     vertical, en la consulta de medios de 600 px al final de la hoja.      */
+  --img-portada: url("fotos/portada.webp");
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -642,10 +645,12 @@ p:last-child{ margin-bottom:0; }
   transform:translateY(-6px);
   border-color:var(--borde-dorado);
 }
+/* Formato vertical 3:4 — es el formato nativo de todas las fotografías,
+   así que se muestran completas, sin recortes que corten a los sujetos. */
 .galeria__item img,
 .galeria__item .ph{
   width:100%;
-  aspect-ratio:4/3;
+  aspect-ratio:3/4;
   object-fit:cover;
   transition:transform .6s cubic-bezier(.4,0,.2,1);
 }
@@ -1077,7 +1082,12 @@ p:last-child{ margin-bottom:0; }
 /* --- Celular --- */
 @media (max-width:600px){
   body{ font-size:16px; }
-  :root{ --alto-header:66px; }
+  /* La pantalla del celular es vertical: se sirve la foto de portada vertical,
+     que además pesa menos que la versión ancha de escritorio. */
+  :root{
+    --alto-header:66px;
+    --img-portada:url("fotos/portada-movil.webp");
+  }
 
   .seccion{ padding:64px 0; }
   .contenedor,.header__interior{ padding:0 18px; }
@@ -1269,13 +1279,8 @@ p:last-child{ margin-bottom:0; }
       </div>
 
       <div class="nosotros__marco revelar" style="--retraso:.14s">
-        <!-- REEMPLAZAR FOTO: descomente la línea de abajo, ponga la ruta real
-             y elimine el <div class="ph"> completo. -->
-        <!-- <img src="fotos/nosotros.jpg" alt="Conductor profesional de OrcLuxuryTransport junto al vehículo, listo para un traslado en Panamá"> -->
-        <div class="ph" role="img" aria-label="Espacio reservado para la fotografía de la sección Quiénes Somos">
-          <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-          <span class="ph__texto">Foto · Vehículo o conductor</span>
-        </div>
+        <img src="fotos/nosotros.webp" width="1000" height="1250" loading="lazy" decoding="async"
+             alt="Vehículo de OrcLuxuryTransport, una minivan blanca de siete plazas lista para un traslado en Panamá">
       </div>
 
     </div>
@@ -1393,79 +1398,58 @@ p:last-child{ margin-bottom:0; }
 
       <div class="seccion__encabezado revelar">
         <span class="etiqueta">Galería</span>
-        <h2>Nuestros vehículos y recorridos</h2>
-        <p>Toque cualquier imagen para verla en tamaño completo.</p>
+        <h2>Destinos a los que lo llevamos</h2>
+        <p>Una muestra de los recorridos que hacemos. Toque cualquier imagen para verla completa.</p>
         <div class="linea-dorada"></div>
-        <p class="nota-preview">
-          Los seis espacios muestran dónde irán las fotografías reales de la flota.
-        </p>
       </div>
 
       <!-- ---------------------------------------------------------------------
-           REEMPLAZAR FOTO (×6): en cada bloque, descomente la línea de <img>,
-           ponga la ruta de la foto real y elimine el <div class="ph">.
-           Recomendado: fotos horizontales de 1600 px de ancho.
+           Para cambiar una foto: reemplace el archivo dentro de la carpeta
+           /fotos manteniendo el mismo nombre, o edite el atributo src.
+           Formato: vertical 3:4 (900 x 1200 px), en WebP.
            --------------------------------------------------------------------- -->
       <div class="galeria" id="galeria">
 
         <figure class="galeria__item revelar" tabindex="0" role="button"
-                aria-label="Ampliar imagen: flota de vehículos">
-          <!-- <img src="fotos/flota.jpg" alt="Flota de vehículos de OrcLuxuryTransport en Panamá"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto de la flota de vehículos">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Nuestra flota</span>
-          </div>
-          <figcaption class="galeria__pie">Nuestra flota</figcaption>
+                aria-label="Ampliar imagen: Canal de Panamá">
+          <img src="fotos/g1-canal.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Buque de carga atravesando las esclusas del Canal de Panamá">
+          <figcaption class="galeria__pie">Canal de Panamá</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: interior del vehículo">
-          <!-- <img src="fotos/interior.jpg" alt="Interior cómodo y limpio de uno de los vehículos"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto del interior del vehículo">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Interior del vehículo</span>
-          </div>
-          <figcaption class="galeria__pie">Interior del vehículo</figcaption>
+                aria-label="Ampliar imagen: Casco Antiguo">
+          <img src="fotos/g2-casco.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Calle del Casco Antiguo de la Ciudad de Panamá decorada con sombreros de colores">
+          <figcaption class="galeria__pie">Casco Antiguo</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: traslado al aeropuerto">
-          <!-- <img src="fotos/aeropuerto.jpg" alt="Traslado de pasajeros al Aeropuerto Internacional de Tocumen"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto de traslado al aeropuerto">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Traslado al aeropuerto</span>
-          </div>
-          <figcaption class="galeria__pie">Traslados al aeropuerto</figcaption>
+                aria-label="Ampliar imagen: fauna silvestre">
+          <img src="fotos/g3-fauna.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Monos capuchinos en su hábitat natural durante un recorrido por la selva panameña">
+          <figcaption class="galeria__pie">Fauna silvestre</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" tabindex="0" role="button"
-                aria-label="Ampliar imagen: recorrido turístico">
-          <!-- <img src="fotos/turismo.jpg" alt="Recorrido turístico por el Casco Antiguo de la Ciudad de Panamá"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto de recorrido turístico">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Recorrido turístico</span>
-          </div>
-          <figcaption class="galeria__pie">Recorridos turísticos</figcaption>
+                aria-label="Ampliar imagen: cascadas y naturaleza">
+          <img src="fotos/g4-cascadas.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Cascada en el interior de Panamá, uno de los destinos de nuestros recorridos">
+          <figcaption class="galeria__pie">Cascadas y naturaleza</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: servicio corporativo">
-          <!-- <img src="fotos/corporativo.jpg" alt="Vehículo ejecutivo esperando a un cliente corporativo"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto de servicio corporativo">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Servicio corporativo</span>
-          </div>
-          <figcaption class="galeria__pie">Servicio corporativo</figcaption>
+                aria-label="Ampliar imagen: arquitectura colonial">
+          <img src="fotos/g5-colonial.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Fachada de piedra de una iglesia colonial en el Casco Antiguo de Panamá">
+          <figcaption class="galeria__pie">Arquitectura colonial</figcaption>
         </figure>
 
         <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: transporte de grupos">
-          <!-- <img src="fotos/grupos.jpg" alt="Transporte de grupos y familias en vehículo amplio"> -->
-          <div class="ph" role="img" aria-label="Espacio reservado para foto de transporte de grupos">
-            <svg class="ph__icono" aria-hidden="true"><use href="#ph-vehiculo"></use></svg>
-            <span class="ph__texto">Foto · Grupos y familias</span>
-          </div>
-          <figcaption class="galeria__pie">Grupos y familias</figcaption>
+                aria-label="Ampliar imagen: gastronomía típica">
+          <img src="fotos/g6-gastronomia.webp" width="900" height="1200" loading="lazy" decoding="async"
+               alt="Plato de comida típica panameña servido durante un recorrido gastronómico">
+          <figcaption class="galeria__pie">Gastronomía típica</figcaption>
         </figure>
 
       </div>
