@@ -175,7 +175,7 @@ p:last-child{ margin-bottom:0; }
 }
 
 .seccion{
-  padding:104px 0;
+  padding:80px 0;
   scroll-margin-top:var(--alto-header);
 }
 .seccion--alterna{ background:var(--negro-suave); }
@@ -183,7 +183,7 @@ p:last-child{ margin-bottom:0; }
 /* Encabezado de sección: etiqueta pequeña + título + línea dorada */
 .seccion__encabezado{
   max-width:660px;
-  margin:0 auto 62px;
+  margin:0 auto 42px;
   text-align:center;
 }
 .etiqueta{
@@ -585,11 +585,11 @@ p:last-child{ margin-bottom:0; }
 .rejilla-3{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(286px,1fr));
-  gap:26px;
+  gap:18px;
 }
 .servicio{
   position:relative;
-  padding:40px 32px;
+  padding:24px 24px 26px;
   background:var(--negro-suave);
   border:1px solid var(--borde);
   border-radius:var(--radio);
@@ -613,25 +613,33 @@ p:last-child{ margin-bottom:0; }
 }
 .servicio:hover::before{ width:100%; }
 
+/* Ícono y título en la misma línea: ocupa bastante menos alto que el
+   ícono encima del texto, y la tarjeta se lee igual de bien. */
+.servicio__cabecera{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:11px;
+}
 .servicio__icono{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:58px; height:58px;
-  margin-bottom:24px;
+  width:42px; height:42px;
+  flex-shrink:0;
   color:var(--dorado);
   background:rgba(200,164,77,.09);
   border:1px solid var(--borde-dorado);
-  border-radius:12px;
+  border-radius:11px;
   transition:background var(--transicion), transform var(--transicion);
 }
-.servicio__icono .ico{ width:26px; height:26px; }
+.servicio__icono .ico{ width:21px; height:21px; }
 .servicio:hover .servicio__icono{
   background:rgba(200,164,77,.16);
   transform:scale(1.07);
 }
-.servicio h3{ margin-bottom:12px; }
-.servicio p{ font-size:.95rem; color:var(--texto-tenue); }
+.servicio h3{ font-size:1.04rem; margin-bottom:0; }
+.servicio p{ font-size:.9rem; line-height:1.62; color:var(--texto-tenue); }
 
 /* ==========================================================================
    7. POR QUÉ ELEGIRNOS
@@ -647,8 +655,8 @@ p:last-child{ margin-bottom:0; }
 .beneficio{
   display:flex;
   align-items:flex-start;
-  gap:18px;
-  padding:26px;
+  gap:14px;
+  padding:18px 20px;
   background:rgba(255,255,255,.025);
   border:1px solid var(--borde);
   border-radius:var(--radio);
@@ -664,15 +672,16 @@ p:last-child{ margin-bottom:0; }
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:38px; height:38px;
+  width:30px; height:30px;
+  margin-top:2px;
   flex-shrink:0;
   color:var(--negro);
   background:var(--dorado);
   border-radius:50%;
 }
-.beneficio__check .ico{ width:20px; height:20px; stroke-width:2.4; }
-.beneficio h3{ margin-bottom:5px; font-size:1.04rem; }
-.beneficio p{ font-size:.9rem; color:var(--texto-tenue); }
+.beneficio__check .ico{ width:16px; height:16px; stroke-width:2.6; }
+.beneficio h3{ margin-bottom:3px; font-size:.98rem; }
+.beneficio p{ font-size:.86rem; line-height:1.55; color:var(--texto-tenue); }
 
 /* ==========================================================================
    8. GALERÍA Y VISOR DE IMÁGENES (LIGHTBOX)
@@ -842,7 +851,7 @@ p:last-child{ margin-bottom:0; }
    ========================================================================== */
 .paso{
   position:relative;
-  padding:40px 32px 34px;
+  padding:22px 24px 24px;
   background:var(--negro-suave);
   border:1px solid var(--borde);
   border-radius:var(--radio);
@@ -850,18 +859,25 @@ p:last-child{ margin-bottom:0; }
 }
 .seccion--alterna .paso{ background:rgba(255,255,255,.03); }
 .paso:hover{
-  transform:translateY(-6px);
+  transform:translateY(-5px);
   border-color:var(--borde-dorado);
 }
 
+/* Número en línea con el título, igual que los servicios */
+.paso__cabecera{
+  display:flex;
+  align-items:center;
+  gap:13px;
+  margin-bottom:10px;
+}
 /* El número es decorativo: el orden ya lo da la secuencia de las tarjetas */
 .paso__numero{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:52px; height:52px;
-  margin-bottom:22px;
-  font-size:1.25rem;
+  width:36px; height:36px;
+  flex-shrink:0;
+  font-size:1rem;
   font-weight:700;
   color:var(--dorado);
   background:rgba(200,164,77,.09);
@@ -873,14 +889,38 @@ p:last-child{ margin-bottom:0; }
   background:rgba(200,164,77,.18);
   transform:scale(1.06);
 }
-.paso h3{ margin-bottom:12px; }
-.paso p{ font-size:.95rem; color:var(--texto-tenue); }
+.paso h3{ font-size:1.04rem; margin-bottom:0; }
+.paso p{ font-size:.9rem; line-height:1.62; color:var(--texto-tenue); }
 
 .como-funciona__cierre{
-  margin-top:44px;
+  margin-top:26px;
   text-align:center;
-  font-size:1rem;
-  color:var(--texto);
+  font-size:.94rem;
+  color:var(--texto-tenue);
+}
+
+/* --- Franja para dejar comentarios --- */
+.seccion--compacta{ padding:52px 0; }
+
+.comentarios{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+  flex-wrap:wrap;
+}
+.comentarios__texto{ max-width:600px; }
+.comentarios h2{
+  margin:8px 0 8px;
+  font-size:clamp(1.35rem,2.6vw,1.85rem);
+}
+.comentarios p{ font-size:.93rem; color:var(--texto-tenue); }
+.comentarios__boton{ flex-shrink:0; }
+.comentarios__boton .ico{ width:18px; height:18px; }
+
+@media (max-width:720px){
+  .comentarios{ flex-direction:column; align-items:stretch; gap:22px; }
+  .comentarios__boton{ width:100%; }
 }
 
 /* ==========================================================================
@@ -1135,8 +1175,9 @@ p:last-child{ margin-bottom:0; }
 
 /* --- Tablet vertical: aquí entra el menú hamburguesa --- */
 @media (max-width:900px){
-  .seccion{ padding:78px 0; }
-  .seccion__encabezado{ margin-bottom:46px; }
+  .seccion{ padding:62px 0; }
+  .seccion--compacta{ padding:44px 0; }
+  .seccion__encabezado{ margin-bottom:34px; }
 
   /* Aparecen el botón de idioma y la hamburguesa en la barra superior */
   .header__acciones{ display:flex; }
@@ -1203,8 +1244,16 @@ p:last-child{ margin-bottom:0; }
     --img-portada:url("../fotos/portada-movil.webp");
   }
 
-  .seccion{ padding:64px 0; }
+  .seccion{ padding:50px 0; }
+  .seccion--compacta{ padding:38px 0; }
+  .seccion__encabezado{ margin-bottom:28px; }
   .contenedor,.header__interior{ padding:0 18px; }
+
+  /* Tarjetas más ajustadas: en una columna, el alto se acumula rápido */
+  .rejilla-3{ gap:12px; }
+  .servicio{ padding:20px; }
+  .beneficio{ padding:15px 17px; }
+  .paso{ padding:18px 20px 20px; }
 
   /* Logotipo un punto más pequeño, para que quepan holgados el botón de
      idioma y la hamburguesa en pantallas de 375 px */
@@ -1460,39 +1509,51 @@ p:last-child{ margin-bottom:0; }
       <div class="rejilla-3">
 
         <article class="servicio revelar">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-avion"></use></svg></span>
-          <h3>Airport Transfers</h3>
-          <p>Pickup and drop-off at Tocumen and Albrook with flight tracking. We wait for you even if your flight is delayed.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-avion"></use></svg></span>
+            <h3>Airport Transfers</h3>
+          </div>
+          <p>Tocumen and Albrook, with flight tracking. We wait even if your flight is late.</p>
         </article>
 
         <article class="servicio revelar" style="--retraso:.08s">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-maletin"></use></svg></span>
-          <h3>Corporate Transportation</h3>
-          <p>Moving executives and staff between meetings, hotels and offices, on a coordinated schedule.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-maletin"></use></svg></span>
+            <h3>Corporate Transportation</h3>
+          </div>
+          <p>Executives and staff between meetings, hotels and offices, on a coordinated schedule.</p>
         </article>
 
         <article class="servicio revelar" style="--retraso:.16s">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-usuario"></use></svg></span>
-          <h3>Private Service</h3>
-          <p>A vehicle and driver assigned exclusively to you, for a single trip or the whole day.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-usuario"></use></svg></span>
+            <h3>Private Service</h3>
+          </div>
+          <p>A vehicle and driver just for you, per trip or for the whole day.</p>
         </article>
 
         <article class="servicio revelar">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-camara"></use></svg></span>
-          <h3>Tours &amp; Sightseeing</h3>
-          <p>Casco Antiguo, the Panama Canal, beaches and highlands. Routes built around the time you have.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-camara"></use></svg></span>
+            <h3>Tours &amp; Sightseeing</h3>
+          </div>
+          <p>Casco Antiguo, the Canal, beaches and highlands. Routes built around your time.</p>
         </article>
 
         <article class="servicio revelar" style="--retraso:.08s">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-calendario"></use></svg></span>
-          <h3>Special Events</h3>
-          <p>Weddings, conferences, graduations and celebrations, with on-time transportation for guests and groups.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-calendario"></use></svg></span>
+            <h3>Special Events</h3>
+          </div>
+          <p>Weddings, conferences and celebrations, with on-time transport for your guests.</p>
         </article>
 
         <article class="servicio revelar" style="--retraso:.16s">
-          <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg></span>
-          <h3>Custom Trips</h3>
-          <p>Need a route that is not on the list? Tell us your itinerary and we will build it around you.</p>
+          <div class="servicio__cabecera">
+            <span class="servicio__icono"><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg></span>
+            <h3>Custom Trips</h3>
+          </div>
+          <p>A different route? Tell us your itinerary and we will build it for you.</p>
         </article>
 
       </div>
@@ -1710,62 +1771,6 @@ p:last-child{ margin-bottom:0; }
     </div>
   </section>
 
-  <!-- ========================================================================
-       G. CÓMO FUNCIONA LA RESERVA
-
-       Esta sección ocupa el lugar de los testimonios. Cumple la misma función
-       —dar confianza antes de reservar— pero con información verificable sobre
-       cómo trabaja la empresa, en vez de opiniones atribuidas a terceros.
-       Cuando haya testimonios reales de clientes, con su autorización para
-       publicarlos, esta sección se puede sustituir por ellos.
-       ======================================================================== -->
-  <section class="seccion seccion--alterna" id="como-funciona">
-    <div class="contenedor">
-
-      <div class="seccion__encabezado revelar">
-        <span class="etiqueta">How it works</span>
-        <h2>Booking takes three steps</h2>
-        <p>No apps, no sign-ups and no prepayment.</p>
-        <div class="linea-dorada"></div>
-      </div>
-
-      <div class="rejilla-3">
-
-        <article class="paso revelar">
-          <span class="paso__numero">1</span>
-          <h3>You message us</h3>
-          <p>
-            On WhatsApp or through the form on this page. Tell us the date, the time, the pickup
-            point and the destination. If you are flying in, your flight number.
-          </p>
-        </article>
-
-        <article class="paso revelar" style="--retraso:.08s">
-          <span class="paso__numero">2</span>
-          <h3>We confirm everything</h3>
-          <p>
-            We reply with a fixed price and the assigned vehicle. No surge pricing and no surprise
-            charges: what we agree on is what you pay.
-          </p>
-        </article>
-
-        <article class="paso revelar" style="--retraso:.16s">
-          <span class="paso__numero">3</span>
-          <h3>We are there waiting</h3>
-          <p>
-            Your driver arrives before the agreed time. If your flight is delayed, we track it and
-            adjust the pickup at no extra cost.
-          </p>
-        </article>
-
-      </div>
-
-      <p class="como-funciona__cierre revelar">
-        Any questions before booking? Message us and we will reply within minutes.
-      </p>
-
-    </div>
-  </section>
 
   <!-- ========================================================================
        H. CONTACTO Y FORMULARIO DE RESERVA
@@ -1889,6 +1894,99 @@ p:last-child{ margin-bottom:0; }
     </div>
   </section>
 
+  <!-- ========================================================================
+       G. CÓMO FUNCIONA LA RESERVA
+
+       Esta sección ocupa el lugar de los testimonios. Cumple la misma función
+       —dar confianza antes de reservar— pero con información verificable sobre
+       cómo trabaja la empresa, en vez de opiniones atribuidas a terceros.
+       Cuando haya testimonios reales de clientes, con su autorización para
+       publicarlos, esta sección se puede sustituir por ellos.
+       ======================================================================== -->
+  <section class="seccion seccion--alterna" id="como-funciona">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">How it works</span>
+        <h2>Booking takes three steps</h2>
+        <p>No apps, no sign-ups and no prepayment.</p>
+        <div class="linea-dorada"></div>
+      </div>
+
+      <div class="rejilla-3">
+
+        <article class="paso revelar">
+          <div class="paso__cabecera">
+            <span class="paso__numero">1</span>
+            <h3>You message us</h3>
+          </div>
+          <p>
+            On WhatsApp or through the form: date, time, pickup point, destination and your
+            flight number if you have one.
+          </p>
+        </article>
+
+        <article class="paso revelar" style="--retraso:.08s">
+          <div class="paso__cabecera">
+            <span class="paso__numero">2</span>
+            <h3>We confirm everything</h3>
+          </div>
+          <p>
+            We reply with a fixed price and the assigned vehicle. No surge pricing, no surprise
+            charges.
+          </p>
+        </article>
+
+        <article class="paso revelar" style="--retraso:.16s">
+          <div class="paso__cabecera">
+            <span class="paso__numero">3</span>
+            <h3>We are there waiting</h3>
+          </div>
+          <p>
+            Your driver arrives early. If your flight is delayed, we track it and adjust the
+            pickup at no extra cost.
+          </p>
+        </article>
+
+      </div>
+
+      <p class="como-funciona__cierre revelar">
+        Any questions before booking? Message us and we will reply within minutes.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       I. COMENTARIOS DE CLIENTES
+
+       El botón abre WhatsApp con una plantilla ya escrita, que incluye la
+       pregunta de autorización. Así el comentario llega al teléfono del dueño
+       y nada se publica sin que él lo apruebe: un mensaje ofensivo se queda
+       en la conversación y nunca llega al sitio.
+       ======================================================================== -->
+  <section class="seccion seccion--compacta" id="comentarios">
+    <div class="contenedor comentarios">
+
+      <div class="comentarios__texto">
+        <span class="etiqueta">Your feedback</span>
+        <h2>Travelled with us already?</h2>
+        <p>
+          Tell us how it went. We read every message and publish on this page the reviews of
+          those who give us permission to do so.
+        </p>
+      </div>
+
+      <a class="boton boton--principal comentarios__boton" id="dejar-comentario"
+         href="#" target="_blank" rel="noopener">
+        <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+        Leave a review
+      </a>
+
+    </div>
+  </section>
+
+
 </main>
 
 <!-- ==========================================================================
@@ -2004,7 +2102,27 @@ document.documentElement.classList.add("js");
 
 
 /* ==========================================================================
-   3. MENÚ EN CELULAR (abrir / cerrar)
+   3. BOTÓN PARA DEJAR UN COMENTARIO
+
+   Abre WhatsApp con la plantilla ya escrita, incluida la pregunta de
+   autorización. El comentario llega al teléfono del dueño; nada aparece en
+   la página hasta que él lo aprueba.
+   ========================================================================== */
+(function(){
+  var el = document.getElementById("dejar-comentario");
+  if(!el) return;
+  el.href = enlaceWhatsApp(
+    "Hello OrcLuxuryTransport, I would like to leave a review about the service.\n\n" +
+    "*Name:* \n" +
+    "*Service I used:* \n" +
+    "*My review:* \n\n" +
+    "Do I allow you to publish this on your website, with my name? yes / no"
+  );
+})();
+
+
+/* ==========================================================================
+   4. MENÚ EN CELULAR (abrir / cerrar)
    ========================================================================== */
 (function(){
   var boton = document.getElementById("boton-menu");
