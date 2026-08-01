@@ -523,8 +523,42 @@ p:last-child{ margin-bottom:0; }
 .opiniones__vacio h3{ margin-bottom:7px; font-size:1.1rem; }
 .opiniones__vacio p{ font-size:.92rem; color:var(--texto-tenue); }
 
-.opiniones__pie{ margin-top:28px; text-align:center; }
-.opiniones__aclaracion{ margin:13px 0 0; font-size:.81rem; color:var(--texto-tenue); }
+/* --- Formulario para dejar una opinión --- */
+.dejar{
+  max-width:720px; margin:32px auto 0; padding:28px 26px;
+  background:rgba(255,255,255,.035); border:1px solid var(--borde-dorado); border-radius:var(--radio);
+}
+.dejar__titulo{ margin-bottom:5px; font-size:1.2rem; text-align:center; }
+.dejar__nota{ margin-bottom:20px; font-size:.85rem; color:var(--texto-tenue); text-align:center; }
+
+/* Selector de estrellas, sin JavaScript: los radios van en orden inverso
+   para poder pintar con CSS todas las anteriores a la elegida. */
+.puntuacion{ border:0; padding:0; margin:0; min-width:0; }
+.puntuacion legend{
+  padding:0; font-size:.74rem; font-weight:600; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--texto-tenue);
+}
+.puntuacion legend span{ color:var(--dorado); }
+.puntuacion__grupo{ display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:5px; margin-top:8px; }
+.puntuacion input{ position:absolute; width:1px; height:1px; opacity:0; }
+.puntuacion label{
+  cursor:pointer; color:rgba(255,255,255,.18);
+  transition:color .2s ease, transform .2s ease;
+}
+.puntuacion label .ico{ width:30px; height:30px; }
+.puntuacion input:checked ~ label,
+.puntuacion label:hover,
+.puntuacion label:hover ~ label{ color:var(--dorado); }
+.puntuacion label:hover{ transform:scale(1.12); }
+.puntuacion input:focus-visible + label{ outline:2px solid var(--dorado); outline-offset:3px; border-radius:4px; }
+
+/* Texto solo para lectores de pantalla */
+.oculto{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+/* Campo trampa contra robots: fuera de la vista y del recorrido de tabulación */
+.trampa{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
 /* ==========================================================================
    8. PIE DE PÁGINA Y FLOTANTE
@@ -758,107 +792,9 @@ p:last-child{ margin-bottom:0; }
   </section>
 
   <!-- ======================================================================
-       2. RESERVA — el formulario, lo más arriba posible
+       2. PESTAÑAS — Servicios · Destinos · Por qué elegirnos
        ====================================================================== -->
-  <section class="seccion seccion--alterna" id="reservar">
-    <div class="contenedor">
-
-      <div class="seccion__encabezado revelar">
-        <span class="etiqueta">Booking</span>
-        <h2>Request your trip</h2>
-        <p>We reply with a fixed price within minutes.</p>
-        <div class="linea-dorada"></div>
-      </div>
-
-      <div class="reserva__rejilla" id="contacto">
-
-        <div class="revelar">
-          <div class="contacto__datos">
-            <a class="dato" href="tel:+50768026916">
-              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-telefono"></use></svg></span>
-              <span>
-                <span class="dato__etiqueta">Phone</span>
-                <span class="dato__valor">6802-6916</span>
-              </span>
-            </a>
-            <a class="dato" href="mailto:orielca507@gmail.com">
-              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-correo"></use></svg></span>
-              <span>
-                <span class="dato__etiqueta">Email</span>
-                <span class="dato__valor">orielca507@gmail.com</span>
-              </span>
-            </a>
-            <div class="dato">
-              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-reloj"></use></svg></span>
-              <span>
-                <span class="dato__etiqueta">Hours</span>
-                <span class="dato__valor">24 hours, every day</span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="revelar" style="--retraso:.1s">
-          <form class="formulario" id="form-reserva" novalidate>
-            <h3 class="formulario__titulo">Booking Request</h3>
-            <p class="formulario__nota">
-              Fields marked <span style="color:var(--dorado)">*</span> are required.
-              When you submit, WhatsApp opens with your request ready to send.
-            </p>
-
-            <div class="formulario__rejilla">
-              <div class="campo campo--completo">
-                <label for="f-nombre">Full name <span>*</span></label>
-                <input type="text" id="f-nombre" name="nombre" required autocomplete="name" placeholder="First and last name">
-              </div>
-              <div class="campo">
-                <label for="f-correo">Email address</label>
-                <input type="email" id="f-correo" name="correo" autocomplete="email" placeholder="you@example.com">
-              </div>
-              <div class="campo">
-                <label for="f-telefono">Phone <span>*</span></label>
-                <input type="tel" id="f-telefono" name="telefono" required autocomplete="tel" placeholder="6000-0000">
-              </div>
-              <div class="campo">
-                <label for="f-fecha">Trip date <span>*</span></label>
-                <input type="date" id="f-fecha" name="fecha" required>
-              </div>
-              <div class="campo">
-                <label for="f-hora">Time <span>*</span></label>
-                <input type="time" id="f-hora" name="hora" required>
-              </div>
-              <div class="campo">
-                <label for="f-recogida">Pickup location <span>*</span></label>
-                <input type="text" id="f-recogida" name="recogida" required placeholder="Hotel, address or terminal">
-              </div>
-              <div class="campo">
-                <label for="f-destino">Destination <span>*</span></label>
-                <input type="text" id="f-destino" name="destino" required placeholder="Where are you heading?">
-              </div>
-              <div class="campo campo--completo">
-                <label for="f-mensaje">Message or extra details</label>
-                <textarea id="f-mensaje" name="mensaje" placeholder="Passengers, luggage, flight number, stops..."></textarea>
-              </div>
-
-              <div class="formulario__pie">
-                <button class="boton boton--principal boton--ancho" type="submit">
-                  <svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>
-                  Request Booking
-                </button>
-                <div class="formulario__aviso" id="aviso-form" role="status" aria-live="polite"></div>
-              </div>
-            </div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       3. PESTAÑAS — Servicios · Destinos · Por qué elegirnos
-       ====================================================================== -->
-  <section class="seccion" id="informacion">
+  <section class="seccion seccion--alterna" id="informacion">
     <div class="contenedor">
 
       <div class="tabs__lista" role="tablist" aria-label="Service information">
@@ -1077,6 +1013,105 @@ p:last-child{ margin-bottom:0; }
   </section>
 
   <!-- ======================================================================
+       3. RESERVA — el formulario
+       ====================================================================== -->
+  <section class="seccion" id="reservar">
+    <div class="contenedor">
+
+      <div class="seccion__encabezado revelar">
+        <span class="etiqueta">Booking</span>
+        <h2>Request your trip</h2>
+        <p>We reply with a fixed price within minutes.</p>
+        <div class="linea-dorada"></div>
+      </div>
+
+      <div class="reserva__rejilla" id="contacto">
+
+        <div class="revelar">
+          <div class="contacto__datos">
+            <a class="dato" href="tel:+50768026916">
+              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-telefono"></use></svg></span>
+              <span>
+                <span class="dato__etiqueta">Phone</span>
+                <span class="dato__valor">6802-6916</span>
+              </span>
+            </a>
+            <a class="dato" href="mailto:orielca507@gmail.com">
+              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-correo"></use></svg></span>
+              <span>
+                <span class="dato__etiqueta">Email</span>
+                <span class="dato__valor">orielca507@gmail.com</span>
+              </span>
+            </a>
+            <div class="dato">
+              <span class="dato__icono"><svg class="ico" aria-hidden="true"><use href="#i-reloj"></use></svg></span>
+              <span>
+                <span class="dato__etiqueta">Hours</span>
+                <span class="dato__valor">24 hours, every day</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="revelar" style="--retraso:.1s">
+          <form class="formulario" id="form-reserva" novalidate>
+            <h3 class="formulario__titulo">Booking Request</h3>
+            <p class="formulario__nota">
+              Fields marked <span style="color:var(--dorado)">*</span> are required.
+              When you submit, WhatsApp opens with your request ready to send.
+            </p>
+
+            <div class="formulario__rejilla">
+              <div class="campo campo--completo">
+                <label for="f-nombre">Full name <span>*</span></label>
+                <input type="text" id="f-nombre" name="nombre" required autocomplete="name" placeholder="First and last name">
+              </div>
+              <div class="campo">
+                <label for="f-correo">Email address</label>
+                <input type="email" id="f-correo" name="correo" autocomplete="email" placeholder="you@example.com">
+              </div>
+              <div class="campo">
+                <label for="f-telefono">Phone <span>*</span></label>
+                <input type="tel" id="f-telefono" name="telefono" required autocomplete="tel" placeholder="6000-0000">
+              </div>
+              <div class="campo">
+                <label for="f-fecha">Trip date <span>*</span></label>
+                <input type="date" id="f-fecha" name="fecha" required>
+              </div>
+              <div class="campo">
+                <label for="f-hora">Time <span>*</span></label>
+                <input type="time" id="f-hora" name="hora" required>
+              </div>
+              <div class="campo">
+                <label for="f-recogida">Pickup location <span>*</span></label>
+                <input type="text" id="f-recogida" name="recogida" required placeholder="Hotel, address or terminal">
+              </div>
+              <div class="campo">
+                <label for="f-destino">Destination <span>*</span></label>
+                <input type="text" id="f-destino" name="destino" required placeholder="Where are you heading?">
+              </div>
+              <div class="campo campo--completo">
+                <label for="f-mensaje">Message or extra details</label>
+                <textarea id="f-mensaje" name="mensaje" placeholder="Passengers, luggage, flight number, stops..."></textarea>
+              </div>
+
+              <div class="formulario__pie">
+                <button class="boton boton--principal boton--ancho" type="submit">
+                  <svg class="ico" aria-hidden="true"><use href="#i-chat"></use></svg>
+                  Request Booking
+                </button>
+                <div class="formulario__aviso" id="aviso-form" role="status" aria-live="polite"></div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================================
        4. OPINIONES
        El contenido se genera desde la lista RESENAS del <script>.
        ====================================================================== -->
@@ -1091,14 +1126,83 @@ p:last-child{ margin-bottom:0; }
 
       <div id="opiniones-contenido"></div>
 
-      <div class="opiniones__pie revelar">
-        <a class="boton boton--principal" id="dejar-comentario" href="#" target="_blank" rel="noopener">
-          <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-          Leave a review
-        </a>
-        <p class="opiniones__aclaracion">
-          Reviews are published with the permission of the person who wrote them.
+      <!-- Formulario para dejar una opinión. Se envía a /api/resenas y queda
+           guardada SIN publicar hasta que el dueño la apruebe. -->
+      <div class="dejar revelar">
+        <h3 class="dejar__titulo">Leave your review</h3>
+        <p class="dejar__nota">
+          Your review is checked before it is published. Fields marked
+          <span style="color:var(--dorado)">*</span> are required.
         </p>
+
+        <form id="form-resena" novalidate>
+
+          <div class="formulario__rejilla">
+
+            <div class="campo">
+              <label for="r-nombre">Your name <span>*</span></label>
+              <input type="text" id="r-nombre" name="nombre" required maxlength="60"
+                     autocomplete="name" placeholder="How you want it to appear">
+            </div>
+
+            <div class="campo">
+              <label for="r-servicio">Service you used</label>
+              <input type="text" id="r-servicio" name="servicio" maxlength="60"
+                     list="lista-servicios" placeholder="Transfer, tour, corporate...">
+              <datalist id="lista-servicios">
+                <option value="Airport transfer"></option>
+                <option value="Corporate transportation"></option>
+                <option value="Private service"></option>
+                <option value="Tours and sightseeing"></option>
+                <option value="Special events"></option>
+              </datalist>
+            </div>
+
+            <fieldset class="campo campo--completo puntuacion">
+              <legend>Rating <span>*</span></legend>
+              <!-- En orden inverso a propósito: permite pintar las estrellas
+                   anteriores con CSS puro, sin JavaScript -->
+              <div class="puntuacion__grupo">
+                <input type="radio" name="estrellas" id="p5" value="5">
+                <label for="p5" title="5 stars"><span class="oculto">5 stars</span>
+                  <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg></label>
+                <input type="radio" name="estrellas" id="p4" value="4">
+                <label for="p4" title="4 stars"><span class="oculto">4 stars</span>
+                  <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg></label>
+                <input type="radio" name="estrellas" id="p3" value="3">
+                <label for="p3" title="3 stars"><span class="oculto">3 stars</span>
+                  <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg></label>
+                <input type="radio" name="estrellas" id="p2" value="2">
+                <label for="p2" title="2 stars"><span class="oculto">2 stars</span>
+                  <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg></label>
+                <input type="radio" name="estrellas" id="p1" value="1">
+                <label for="p1" title="1 star"><span class="oculto">1 star</span>
+                  <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg></label>
+              </div>
+            </fieldset>
+
+            <div class="campo campo--completo">
+              <label for="r-texto">Your review <span>*</span></label>
+              <textarea id="r-texto" name="texto" required minlength="10" maxlength="1000"
+                        placeholder="How was the service?"></textarea>
+            </div>
+
+            <!-- Campo trampa: invisible para las personas, lo rellenan los robots -->
+            <div class="trampa" aria-hidden="true">
+              <label for="r-web">Do not fill in this field</label>
+              <input type="text" id="r-web" name="web" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="formulario__pie">
+              <button class="boton boton--principal boton--ancho" type="submit" id="r-enviar">
+                <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
+                Send my review
+              </button>
+              <div class="formulario__aviso" id="aviso-resena" role="status" aria-live="polite"></div>
+            </div>
+
+          </div>
+        </form>
       </div>
 
     </div>
@@ -1227,15 +1331,6 @@ document.documentElement.classList.add("js");
     if(el) el.href = url;
   });
 
-  var op = document.getElementById("dejar-comentario");
-  if(op) op.href = enlaceWhatsApp(
-    "Hello OrcLuxuryTransport, I would like to leave a review about the service.\n\n" +
-    "*Name:* \n" +
-    "*Service I used:* \n" +
-    "*Rating from 1 to 5:* \n" +
-    "*My review:* \n\n" +
-    "Do I allow you to publish it on your website, with my name? yes / no"
-  );
 })();
 
 
@@ -1267,57 +1362,144 @@ document.documentElement.classList.add("js");
     return (((p[0]||"")[0]||"") + ((p[1]||"")[0]||"")).toUpperCase();
   }
 
-  /* --- Sin opiniones todavía --- */
-  if(!RESENAS.length){
-    caja.innerHTML =
-      '<div class="opiniones__vacio revelar">' +
-        '<svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>' +
-        '<h3>No reviews published yet</h3>' +
-        '<p>Travelled with us already? Be the first to share how it went.</p>' +
-      '</div>';
-    return;
+  /* Fecha ISO -> "Julio 2026" */
+  var MESES = ["January","February","March","April","May","June",
+               "July","August","September","October","November","December"];
+  function mesYAno(iso){
+    if(!iso) return "";
+    var d = new Date(iso);
+    if(isNaN(d)) return "";
+    var m = MESES[d.getMonth()];
+    return m + " " + d.getFullYear();
   }
 
-  /* --- Con opiniones: promedio + tarjetas --- */
-  var suma = RESENAS.reduce(function(t,r){ return t + Number(r.estrellas || 0); }, 0);
-  var promedio = suma / RESENAS.length;
-  var promedioTexto = (Math.round(promedio * 10) / 10).toFixed(1).replace(".", ",");
+  function pintar(lista){
+    if(!lista.length){
+      caja.innerHTML =
+        '<div class="opiniones__vacio revelar">' +
+          '<svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>' +
+          '<h3>No reviews published yet</h3>' +
+          '<p>Travelled with us already? Be the first to share how it went.</p>' +
+        '</div>';
+      return;
+    }
 
-  var html =
-    '<div class="opiniones__resumen revelar">' +
-      '<div class="opiniones__nota">' +
-        '<span class="opiniones__numero">' + promedioTexto + '</span>' +
-        '<span class="opiniones__sobre">/ 5</span>' +
-      '</div>' +
-      '<div class="opiniones__detalle">' +
-        estrellas(Math.round(promedio)) +
-        '<p class="opiniones__conteo">' + RESENAS.length +
-          (RESENAS.length === 1 ? " review published" : " reviews published") + '</p>' +
-      '</div>' +
-    '</div>' +
-    '<div class="opiniones__lista">';
+    var suma = lista.reduce(function(t,r){ return t + Number(r.estrellas || 0); }, 0);
+    var promedio = suma / lista.length;
+    var promedioTexto = (Math.round(promedio * 10) / 10).toFixed(1).replace(".", ",");
 
-  RESENAS.forEach(function(r, i){
-    var avatar = r.foto
-      ? '<img class="resena__foto" src="' + escapar(r.foto) + '" width="48" height="48" loading="lazy" alt="Photo of ' + escapar(r.nombre) + '">'
-      : '<span class="resena__iniciales" aria-hidden="true">' + escapar(iniciales(r.nombre)) + '</span>';
-
-    var meta = [r.servicio, r.fecha].filter(Boolean).map(escapar).join(" · ");
-
-    html +=
-      '<article class="resena revelar" style="--retraso:' + ((i % 3) * 0.07) + 's">' +
-        '<div class="resena__cabecera">' + avatar +
-          '<div>' +
-            '<span class="resena__nombre">' + escapar(r.nombre) + '</span>' +
-            '<span class="resena__meta">' + meta + '</span>' +
-          '</div>' +
+    var html =
+      '<div class="opiniones__resumen revelar">' +
+        '<div class="opiniones__nota">' +
+          '<span class="opiniones__numero">' + promedioTexto + '</span>' +
+          '<span class="opiniones__sobre">/ 5</span>' +
         '</div>' +
-        '<div class="resena__estrellas">' + estrellas(Number(r.estrellas)) + '</div>' +
-        '<blockquote>' + escapar(r.texto) + '</blockquote>' +
-      '</article>';
-  });
+        '<div class="opiniones__detalle">' +
+          estrellas(Math.round(promedio)) +
+          '<p class="opiniones__conteo">' + lista.length +
+            (lista.length === 1 ? " review published" : " reviews published") + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="opiniones__lista">';
 
-  caja.innerHTML = html + '</div>';
+    lista.forEach(function(r, i){
+      var avatar = r.foto
+        ? '<img class="resena__foto" src="' + escapar(r.foto) + '" width="48" height="48" loading="lazy" alt="Photo of ' + escapar(r.nombre) + '">'
+        : '<span class="resena__iniciales" aria-hidden="true">' + escapar(iniciales(r.nombre)) + '</span>';
+
+      var fecha = r.fecha || mesYAno(r.creada);
+      var meta  = [r.servicio, fecha].filter(Boolean).map(escapar).join(" · ");
+
+      html +=
+        '<article class="resena revelar" style="--retraso:' + ((i % 3) * 0.07) + 's">' +
+          '<div class="resena__cabecera">' + avatar +
+            '<div>' +
+              '<span class="resena__nombre">' + escapar(r.nombre) + '</span>' +
+              '<span class="resena__meta">' + meta + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="resena__estrellas">' + estrellas(Number(r.estrellas)) + '</div>' +
+          '<blockquote>' + escapar(r.texto) + '</blockquote>' +
+        '</article>';
+    });
+
+    caja.innerHTML = html + '</div>';
+  }
+
+  /* Se piden al servidor las opiniones ya aprobadas. Si la consulta falla
+     (por ejemplo al abrir el archivo suelto, sin servidor), se usa la lista
+     RESENAS escrita a mano más arriba. */
+  pintar(RESENAS);
+  if(window.fetch){
+    fetch("/api/resenas", { headers:{ "Accept":"application/json" } })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d){
+        if(d && d.ok && Array.isArray(d.resenas)) pintar(RESENAS.concat(d.resenas));
+      })
+      .catch(function(){ /* sin servidor: se queda la lista manual */ });
+  }
+})();
+
+
+/* ==========================================================================
+   3b. FORMULARIO PARA DEJAR UNA OPINIÓN
+
+   Envía los datos a /api/resenas. La opinión queda guardada sin publicar
+   hasta que el dueño la aprueba, así que nada aparece solo en la página.
+   ========================================================================== */
+(function(){
+  var form  = document.getElementById("form-resena");
+  var aviso = document.getElementById("aviso-resena");
+  if(!form) return;
+
+  function mensaje(texto, icono){
+    aviso.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-' + icono + '"></use></svg>'
+                    + "<span>" + texto + "</span>";
+    aviso.classList.add("visible");
+  }
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    var nombre    = form.nombre.value.trim();
+    var texto     = form.texto.value.trim();
+    var servicio  = form.servicio.value.trim();
+    var elegida   = form.querySelector('input[name="estrellas"]:checked');
+
+    if(nombre.length < 2){ form.nombre.focus(); return mensaje("Please enter your name.", "cerrar"); }
+    if(!elegida){ return mensaje("Please choose a rating from 1 to 5 stars.", "cerrar"); }
+    if(texto.length < 10){ form.texto.focus(); return mensaje("Please tell us a bit more about your experience.", "cerrar"); }
+
+    var boton = document.getElementById("r-enviar");
+    boton.disabled = true;
+    mensaje("Sending...", "reloj");
+
+    fetch("/api/resenas", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre: nombre,
+        estrellas: Number(elegida.value),
+        servicio: servicio,
+        texto: texto,
+        web: form.web.value
+      })
+    })
+    .then(function(r){ return r.json().then(function(d){ return { ok:r.ok, d:d }; }); })
+    .then(function(res){
+      if(res.ok && res.d.ok){
+        form.reset();
+        mensaje("Thank you! We received your review. We check it before publishing.", "check");
+      } else {
+        boton.disabled = false;
+        mensaje(res.d && res.d.error ? res.d.error : "Could not send. Please try again.", "cerrar");
+      }
+    })
+    .catch(function(){
+      boton.disabled = false;
+      mensaje("Could not connect. Check your connection and try again.", "cerrar");
+    });
+  });
 })();
 
 
