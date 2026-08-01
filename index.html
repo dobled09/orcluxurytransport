@@ -19,8 +19,10 @@
                    Formato obligatorio: código de país + número, sin espacios
                    ni guiones. Panamá = 507. Ejemplo: 50768026916
 
-  3. TESTIMONIOS . Son DE EJEMPLO. Deben reemplazarse por testimonios reales
-                   antes de publicar el sitio. Busque "TESTIMONIOS DE EJEMPLO".
+  3. CARRUSEL .... Los destinos están en la sección "Galería". Para añadir o
+                   quitar uno, copie un bloque <figure> completo y cambie el
+                   src, el data-completa, el alt y el <figcaption>. Los puntos
+                   indicadores se generan solos.
 
   4. TEXTOS ...... Todos están en el HTML, en texto plano. Se editan directo.
 
@@ -279,33 +281,6 @@ p:last-child{ margin-bottom:0; }
     transition-duration:.01ms !important;
   }
   .js .revelar{ opacity:1; transform:none; }
-}
-
-/* --- Marcas de contenido de muestra --------------------------------------
-   Identifican los textos que todavía no son reales. SE ELIMINAN cuando se
-   coloquen los testimonios verdaderos: borre estas dos reglas y las
-   etiquetas <span class="marca-ejemplo"> y <p class="nota-preview">.        */
-.marca-ejemplo{
-  display:inline-block;
-  margin-bottom:16px;
-  padding:5px 12px;
-  font-size:.66rem;
-  font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--dorado);
-  background:rgba(200,164,77,.10);
-  border:1px solid var(--borde-dorado);
-  border-radius:999px;
-}
-.nota-preview{
-  margin-top:18px;
-  padding:14px 18px;
-  font-size:.86rem;
-  color:var(--texto-tenue);
-  background:rgba(200,164,77,.06);
-  border:1px dashed var(--borde-dorado);
-  border-radius:10px;
 }
 
 /* ==========================================================================
@@ -629,11 +604,72 @@ p:last-child{ margin-bottom:0; }
 /* ==========================================================================
    8. GALERÍA Y VISOR DE IMÁGENES (LIGHTBOX)
    ========================================================================== */
-.galeria{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+/* --- Carrusel de destinos ---
+   La pista es un contenedor con desplazamiento horizontal y anclaje (scroll
+   snap): en celular se desliza con el dedo sin necesidad de JavaScript, y las
+   flechas y los puntos son un añadido para ratón y teclado. */
+.carrusel{ position:relative; }
+
+.carrusel__pista{
+  display:flex;
   gap:22px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  scrollbar-width:none;              /* Firefox */
+  -ms-overflow-style:none;           /* Edge antiguo */
 }
+.carrusel__pista::-webkit-scrollbar{ display:none; }
+
+.carrusel__pista .galeria__item{
+  flex:0 0 calc((100% - 44px) / 3);  /* tres visibles en escritorio */
+  scroll-snap-align:start;
+}
+/* Dentro del carrusel no se eleva la tarjeta: la pista recorta en vertical */
+.carrusel__pista .galeria__item:hover{ transform:none; }
+
+/* Flechas */
+.carrusel__flecha{
+  position:absolute;
+  top:calc(50% - 26px);
+  z-index:5;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:48px; height:48px;
+  color:var(--blanco);
+  background:rgba(15,15,15,.84);
+  border:1px solid var(--borde-dorado);
+  border-radius:50%;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  transition:background var(--transicion), color var(--transicion),
+             opacity var(--transicion), transform var(--transicion);
+}
+.carrusel__flecha:hover{ background:var(--dorado); color:var(--negro); transform:scale(1.08); }
+.carrusel__flecha--ant{ left:-14px; }
+.carrusel__flecha--sig{ right:-14px; }
+.carrusel__flecha:disabled{ opacity:.25; cursor:default; transform:none; }
+
+/* Puntos indicadores */
+.carrusel__puntos{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:30px;
+}
+.carrusel__punto{
+  width:9px; height:9px;
+  padding:0;
+  background:rgba(255,255,255,.24);
+  border:none;
+  border-radius:50%;
+  transition:background var(--transicion), transform var(--transicion);
+}
+.carrusel__punto:hover{ background:rgba(255,255,255,.5); }
+.carrusel__punto.activo{ background:var(--dorado); transform:scale(1.4); }
 .galeria__item{
   position:relative;
   margin:0;
@@ -728,60 +764,51 @@ p:last-child{ margin-bottom:0; }
 .visor__boton--cerrar{ top:22px; right:22px; }
 .visor__boton--ant{ left:22px; top:50%; transform:translateY(-50%); }
 .visor__boton--sig{ right:22px; top:50%; transform:translateY(-50%); }
-
 /* ==========================================================================
-   9. TESTIMONIOS
+   9. CÓMO FUNCIONA LA RESERVA (tarjetas numeradas)
    ========================================================================== */
-.testimonio{
+.paso{
   position:relative;
-  padding:38px 32px;
+  padding:40px 32px 34px;
   background:var(--negro-suave);
   border:1px solid var(--borde);
   border-radius:var(--radio);
   transition:transform var(--transicion), border-color var(--transicion);
 }
-.testimonio:hover{
+.seccion--alterna .paso{ background:rgba(255,255,255,.03); }
+.paso:hover{
   transform:translateY(-6px);
   border-color:var(--borde-dorado);
 }
-.testimonio__estrellas{
-  display:flex;
-  gap:4px;
-  margin-bottom:20px;
-  color:var(--dorado);
-}
-.testimonio__estrellas .ico{ width:17px; height:17px; }
-.testimonio blockquote{
-  margin:0 0 24px;
-  font-size:1rem;
-  line-height:1.75;
-  color:var(--texto);
-}
-.testimonio__autor{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding-top:20px;
-  border-top:1px solid var(--borde);
-}
-.testimonio__inicial{
+
+/* El número es decorativo: el orden ya lo da la secuencia de las tarjetas */
+.paso__numero{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:44px; height:44px;
-  flex-shrink:0;
+  width:52px; height:52px;
+  margin-bottom:22px;
+  font-size:1.25rem;
   font-weight:700;
   color:var(--dorado);
-  background:rgba(200,164,77,.12);
+  background:rgba(200,164,77,.09);
   border:1px solid var(--borde-dorado);
   border-radius:50%;
+  transition:background var(--transicion), transform var(--transicion);
 }
-.testimonio__nombre{
-  display:block;
-  font-weight:600;
-  color:var(--blanco);
+.paso:hover .paso__numero{
+  background:rgba(200,164,77,.18);
+  transform:scale(1.06);
 }
-.testimonio__detalle{ font-size:.84rem; color:var(--texto-tenue); }
+.paso h3{ margin-bottom:12px; }
+.paso p{ font-size:.95rem; color:var(--texto-tenue); }
+
+.como-funciona__cierre{
+  margin-top:44px;
+  text-align:center;
+  font-size:1rem;
+  color:var(--texto);
+}
 
 /* ==========================================================================
    10. CONTACTO Y FORMULARIO DE RESERVA
@@ -1081,6 +1108,11 @@ p:last-child{ margin-bottom:0; }
 
   .portada__datos{ gap:12px 24px; margin-top:40px; }
   .formulario{ padding:30px 24px; }
+
+  /* Carrusel: dos fotos visibles en tablet */
+  .carrusel__pista .galeria__item{ flex:0 0 calc((100% - 22px) / 2); }
+  .carrusel__flecha--ant{ left:-6px; }
+  .carrusel__flecha--sig{ right:-6px; }
 }
 
 /* --- Celular --- */
@@ -1103,7 +1135,15 @@ p:last-child{ margin-bottom:0; }
 
   .rejilla-3{ grid-template-columns:1fr; gap:18px; }
   .servicio{ padding:32px 26px; }
-  .galeria{ grid-template-columns:1fr; gap:16px; }
+
+  /* Carrusel en celular: una foto por pantalla, con un adelanto de la
+     siguiente para que se entienda que se puede deslizar. */
+  .carrusel__pista{ gap:14px; }
+  .carrusel__pista .galeria__item{ flex:0 0 87%; }
+  .carrusel__flecha{ width:40px; height:40px; top:calc(50% - 22px); }
+  .carrusel__flecha--ant{ left:4px; }
+  .carrusel__flecha--sig{ right:4px; }
+  .carrusel__puntos{ gap:8px; margin-top:22px; }
 
   /* En celular el formulario va todo en una columna */
   .formulario__rejilla{ grid-template-columns:1fr; }
@@ -1403,154 +1443,213 @@ p:last-child{ margin-bottom:0; }
       <div class="seccion__encabezado revelar">
         <span class="etiqueta">Galería</span>
         <h2>Destinos a los que lo llevamos</h2>
-        <p>Una muestra de los recorridos que hacemos. Toque cualquier imagen para verla completa.</p>
+        <p>Deslice para recorrerlos. Toque cualquier imagen para verla completa.</p>
         <div class="linea-dorada"></div>
       </div>
 
       <!-- ---------------------------------------------------------------------
-           Para cambiar una foto: reemplace el archivo dentro de la carpeta
-           /fotos manteniendo el mismo nombre, o edite el atributo src.
-           Formato: horizontal 4:3 (1200 x 900 px), en WebP.
+           CARRUSEL DE DESTINOS
+           Para añadir o quitar un destino: copie un bloque <figure> completo,
+           cambie el src, el alt y el <figcaption>. Los puntos indicadores se
+           generan solos según la cantidad de fotos, no hay que tocarlos.
+           Formato de las fotos: horizontal 4:3 (1200 x 900 px), en WebP.
            --------------------------------------------------------------------- -->
-      <div class="galeria" id="galeria">
+      <div class="carrusel revelar">
 
-        <figure class="galeria__item revelar" tabindex="0" role="button"
-                aria-label="Ampliar imagen: Canal de Panamá">
-          <img src="fotos/g1-canal.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Visitantes observando el paso de un buque por las esclusas del Canal de Panamá">
-          <figcaption class="galeria__pie">Canal de Panamá</figcaption>
-        </figure>
+        <button class="carrusel__flecha carrusel__flecha--ant" id="carrusel-ant"
+                type="button" aria-label="Ver destinos anteriores">
+          <svg class="ico" aria-hidden="true"><use href="#i-flecha-izq"></use></svg>
+        </button>
 
-        <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: Casco Antiguo">
-          <img src="fotos/g2-casco.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Calle del Casco Antiguo de la Ciudad de Panamá decorada con sombreros de colores">
-          <figcaption class="galeria__pie">Casco Antiguo</figcaption>
-        </figure>
+        <div class="carrusel__pista" id="carrusel-pista">
 
-        <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: fauna silvestre">
-          <img src="fotos/g3-fauna.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Monos capuchinos en su hábitat natural durante un recorrido por la selva panameña">
-          <figcaption class="galeria__pie">Fauna silvestre</figcaption>
-        </figure>
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: Canal de Panamá">
+            <img src="fotos/d01-canal-de-panama.webp" data-completa="fotos/completas/d01-canal-de-panama.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Buque de carga atravesando las esclusas del Canal de Panamá">
+            <figcaption class="galeria__pie">Canal de Panamá</figcaption>
+          </figure>
 
-        <figure class="galeria__item revelar" tabindex="0" role="button"
-                aria-label="Ampliar imagen: cascadas y naturaleza">
-          <img src="fotos/g4-cascadas.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Cascada en el interior de Panamá, uno de los destinos de nuestros recorridos">
-          <figcaption class="galeria__pie">Cascadas y naturaleza</figcaption>
-        </figure>
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: esclusas de Miraflores">
+            <img src="fotos/d02-esclusas-de-miraflores.webp" data-completa="fotos/completas/d02-esclusas-de-miraflores.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Visitantes en el mirador de las esclusas de Miraflores">
+            <figcaption class="galeria__pie">Esclusas de Miraflores</figcaption>
+          </figure>
 
-        <figure class="galeria__item revelar" style="--retraso:.06s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: arquitectura colonial">
-          <img src="fotos/g5-colonial.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Fachada de piedra de una iglesia colonial en el Casco Antiguo de Panamá">
-          <figcaption class="galeria__pie">Arquitectura colonial</figcaption>
-        </figure>
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: paso de buques">
+            <img src="fotos/d03-paso-de-buques.webp" data-completa="fotos/completas/d03-paso-de-buques.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Público observando el paso de un buque por el Canal de Panamá">
+            <figcaption class="galeria__pie">Paso de buques</figcaption>
+          </figure>
 
-        <figure class="galeria__item revelar" style="--retraso:.12s" tabindex="0" role="button"
-                aria-label="Ampliar imagen: gastronomía típica">
-          <img src="fotos/g6-gastronomia.webp" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Plato de comida típica panameña servido durante un recorrido gastronómico">
-          <figcaption class="galeria__pie">Gastronomía típica</figcaption>
-        </figure>
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: remolcadores del Canal">
+            <img src="fotos/d04-remolcadores-del-canal.webp" data-completa="fotos/completas/d04-remolcadores-del-canal.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Remolcadores atracados en las esclusas del Canal de Panamá">
+            <figcaption class="galeria__pie">Remolcadores del Canal</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: visita al Canal">
+            <img src="fotos/d05-visita-al-canal.webp" data-completa="fotos/completas/d05-visita-al-canal.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Pasajeras de OrcLuxuryTransport durante la visita al Canal de Panamá">
+            <figcaption class="galeria__pie">Visita al Canal</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: Casco Antiguo">
+            <img src="fotos/d06-casco-antiguo.webp" data-completa="fotos/completas/d06-casco-antiguo.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Calle del Casco Antiguo de la Ciudad de Panamá decorada con sombreros de colores">
+            <figcaption class="galeria__pie">Casco Antiguo</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: arquitectura colonial">
+            <img src="fotos/d07-arquitectura-colonial.webp" data-completa="fotos/completas/d07-arquitectura-colonial.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Fachada de piedra de una iglesia colonial en el Casco Antiguo de Panamá">
+            <figcaption class="galeria__pie">Arquitectura colonial</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: monos capuchinos">
+            <img src="fotos/d08-monos-capuchinos.webp" data-completa="fotos/completas/d08-monos-capuchinos.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Dos monos capuchinos en su hábitat natural">
+            <figcaption class="galeria__pie">Monos capuchinos</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: fauna silvestre">
+            <img src="fotos/d09-fauna-silvestre.webp" data-completa="fotos/completas/d09-fauna-silvestre.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Mono capuchino alimentándose durante un recorrido por la selva">
+            <figcaption class="galeria__pie">Fauna silvestre</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: selva panameña">
+            <img src="fotos/d10-selva-panamena.webp" data-completa="fotos/completas/d10-selva-panamena.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Mono entre las ramas de la selva panameña">
+            <figcaption class="galeria__pie">Selva panameña</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: ríos y cascadas">
+            <img src="fotos/d11-rios-y-cascadas.webp" data-completa="fotos/completas/d11-rios-y-cascadas.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Cascada en el interior de Panamá">
+            <figcaption class="galeria__pie">Ríos y cascadas</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: cascadas naturales">
+            <img src="fotos/d12-cascadas-naturales.webp" data-completa="fotos/completas/d12-cascadas-naturales.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Pasajeros disfrutando de una cascada natural durante una excursión">
+            <figcaption class="galeria__pie">Cascadas naturales</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: paseo en bote por la selva">
+            <img src="fotos/d13-paseo-en-bote-por-la-selva.webp" data-completa="fotos/completas/d13-paseo-en-bote-por-la-selva.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Paseo en bote por la selva panameña">
+            <figcaption class="galeria__pie">Paseo en bote</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: comunidad Emberá">
+            <img src="fotos/d14-comunidad-embera.webp" data-completa="fotos/completas/d14-comunidad-embera.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Visita a una comunidad Emberá en Panamá">
+            <figcaption class="galeria__pie">Comunidad Emberá</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: navegación en piragua">
+            <img src="fotos/d15-navegacion-en-piragua.webp" data-completa="fotos/completas/d15-navegacion-en-piragua.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Piraguas en el río durante la excursión a la comunidad Emberá">
+            <figcaption class="galeria__pie">Navegación en piragua</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: senderos y ríos">
+            <img src="fotos/d16-senderos-y-rios.webp" data-completa="fotos/completas/d16-senderos-y-rios.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Recorrido por senderos y ríos del interior de Panamá">
+            <figcaption class="galeria__pie">Senderos y ríos</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: recorrido en comunidad">
+            <img src="fotos/d17-recorrido-en-comunidad.webp" data-completa="fotos/completas/d17-recorrido-en-comunidad.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Grupo de pasajeros durante un recorrido en una comunidad">
+            <figcaption class="galeria__pie">Recorrido en comunidad</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: excursión en grupo">
+            <img src="fotos/d18-excursion-en-grupo.webp" data-completa="fotos/completas/d18-excursion-en-grupo.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Excursión en grupo por la selva panameña">
+            <figcaption class="galeria__pie">Excursión en grupo</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: grupos y excursiones">
+            <img src="fotos/d19-grupos-y-excursiones.webp" data-completa="fotos/completas/d19-grupos-y-excursiones.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Grupo de pasajeros en una excursión de OrcLuxuryTransport">
+            <figcaption class="galeria__pie">Grupos y excursiones</figcaption>
+          </figure>
+
+          <figure class="galeria__item" tabindex="0" role="button" aria-label="Ampliar imagen: gastronomía típica">
+            <img src="fotos/d20-gastronomia-tipica.webp" data-completa="fotos/completas/d20-gastronomia-tipica.webp" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Plato de comida típica panameña servido durante un recorrido">
+            <figcaption class="galeria__pie">Gastronomía típica</figcaption>
+          </figure>
+
+        </div>
+
+        <button class="carrusel__flecha carrusel__flecha--sig" id="carrusel-sig"
+                type="button" aria-label="Ver más destinos">
+          <svg class="ico" aria-hidden="true"><use href="#i-flecha-der"></use></svg>
+        </button>
 
       </div>
+
+      <div class="carrusel__puntos" id="carrusel-puntos" aria-label="Ir a un destino"></div>
     </div>
   </section>
 
   <!-- ========================================================================
-       G. TESTIMONIOS
+       G. CÓMO FUNCIONA LA RESERVA
 
-       >>> TESTIMONIOS DE EJEMPLO <<<
-       Los tres textos siguientes son de muestra, escritos únicamente para
-       mostrar el diseño. DEBEN reemplazarse por testimonios reales de clientes
-       antes de publicar el sitio.
+       Esta sección ocupa el lugar de los testimonios. Cumple la misma función
+       —dar confianza antes de reservar— pero con información verificable sobre
+       cómo trabaja la empresa, en vez de opiniones atribuidas a terceros.
+       Cuando haya testimonios reales de clientes, con su autorización para
+       publicarlos, esta sección se puede sustituir por ellos.
        ======================================================================== -->
-  <section class="seccion seccion--alterna" id="testimonios">
+  <section class="seccion seccion--alterna" id="como-funciona">
     <div class="contenedor">
 
       <div class="seccion__encabezado revelar">
-        <span class="etiqueta">Testimonios</span>
-        <h2>Lo que dicen nuestros clientes</h2>
+        <span class="etiqueta">Cómo funciona</span>
+        <h2>Reservar toma tres pasos</h2>
+        <p>Sin aplicaciones, sin registros y sin pagos por adelantado.</p>
         <div class="linea-dorada"></div>
-        <p class="nota-preview">
-          Los tres textos de abajo son de muestra, escritos solo para mostrar el diseño de
-          esta sección. Se reemplazarán por opiniones reales de clientes.
-        </p>
       </div>
 
       <div class="rejilla-3">
 
-        <article class="testimonio revelar">
-          <span class="marca-ejemplo">Texto de ejemplo</span>
-          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-          </div>
-          <blockquote>
-            Nos recogieron en Tocumen a las cinco de la mañana y el conductor ya estaba
-            esperando cuando salimos. El vehículo impecable y el trato excelente. Los
-            volvimos a contratar para el regreso.
-          </blockquote>
-          <div class="testimonio__autor">
-            <span class="testimonio__inicial" aria-hidden="true">M</span>
-            <div>
-              <span class="testimonio__nombre">Nombre del cliente</span>
-              <span class="testimonio__detalle">Traslado al aeropuerto</span>
-            </div>
-          </div>
+        <article class="paso revelar">
+          <span class="paso__numero">1</span>
+          <h3>Nos escribe</h3>
+          <p>
+            Por WhatsApp o con el formulario de esta página. Indíquenos la fecha, la hora,
+            el punto de recogida y el destino. Si viene en vuelo, el número de vuelo.
+          </p>
         </article>
 
-        <article class="testimonio revelar" style="--retraso:.08s">
-          <span class="marca-ejemplo">Texto de ejemplo</span>
-          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-          </div>
-          <blockquote>
-            Contratamos el servicio para movilizar a un grupo de visitantes durante tres días.
-            Todo coordinado por WhatsApp, sin un solo retraso. Muy recomendados para empresas.
-          </blockquote>
-          <div class="testimonio__autor">
-            <span class="testimonio__inicial" aria-hidden="true">C</span>
-            <div>
-              <span class="testimonio__nombre">Nombre del cliente</span>
-              <span class="testimonio__detalle">Transporte corporativo</span>
-            </div>
-          </div>
+        <article class="paso revelar" style="--retraso:.08s">
+          <span class="paso__numero">2</span>
+          <h3>Confirmamos todo</h3>
+          <p>
+            Le respondemos con el precio cerrado y el vehículo asignado. Nada de tarifas
+            variables ni cargos sorpresa: lo que se acuerda es lo que se paga.
+          </p>
         </article>
 
-        <article class="testimonio revelar" style="--retraso:.16s">
-          <span class="marca-ejemplo">Texto de ejemplo</span>
-          <div class="testimonio__estrellas" role="img" aria-label="Calificación de ejemplo: 5 de 5 estrellas">
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-            <svg class="ico ico--relleno" aria-hidden="true"><use href="#i-estrella"></use></svg>
-          </div>
-          <blockquote>
-            Hicimos el recorrido por el Casco Antiguo y el Canal. El conductor conocía la
-            historia de cada lugar y nos ajustó la ruta cuando quisimos quedarnos más tiempo.
-          </blockquote>
-          <div class="testimonio__autor">
-            <span class="testimonio__inicial" aria-hidden="true">A</span>
-            <div>
-              <span class="testimonio__nombre">Nombre del cliente</span>
-              <span class="testimonio__detalle">Recorrido turístico</span>
-            </div>
-          </div>
+        <article class="paso revelar" style="--retraso:.16s">
+          <span class="paso__numero">3</span>
+          <h3>Lo esperamos</h3>
+          <p>
+            El conductor llega antes de la hora acordada. Si su vuelo se retrasa,
+            seguimos el itinerario y ajustamos la recogida sin costo adicional.
+          </p>
         </article>
 
       </div>
+
+      <p class="como-funciona__cierre revelar">
+        ¿Alguna duda antes de reservar? Escríbanos y le respondemos en minutos.
+      </p>
+
     </div>
   </section>
 
@@ -1907,7 +2006,78 @@ document.documentElement.classList.add("js");
 
 
 /* ==========================================================================
-   6. GALERÍA: VISOR A PANTALLA COMPLETA (LIGHTBOX)
+   6. CARRUSEL DE DESTINOS
+
+   El desplazamiento con el dedo funciona solo, por CSS (scroll snap). Este
+   bloque añade las flechas, los puntos indicadores y el manejo por teclado.
+   ========================================================================== */
+(function(){
+  var pista  = document.getElementById("carrusel-pista");
+  var ant    = document.getElementById("carrusel-ant");
+  var sig    = document.getElementById("carrusel-sig");
+  var caja   = document.getElementById("carrusel-puntos");
+  if(!pista || !ant || !sig || !caja) return;
+
+  var items = pista.querySelectorAll(".galeria__item");
+  if(items.length === 0) return;
+
+  /* --- Un punto por foto, generados según la cantidad que haya --- */
+  var puntos = [];
+  for(var i=0;i<items.length;i++){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "carrusel__punto";
+    b.setAttribute("aria-label", "Ir al destino " + (i+1) + " de " + items.length);
+    (function(n){ b.addEventListener("click", function(){ irA(n); }); })(i);
+    caja.appendChild(b);
+    puntos.push(b);
+  }
+
+  /* Distancia real entre tarjetas: sirve para cualquier tamaño de pantalla,
+     sin depender del valor del gap escrito en el CSS. */
+  function paso(){
+    if(items.length > 1) return items[1].offsetLeft - items[0].offsetLeft;
+    return items[0].getBoundingClientRect().width;
+  }
+
+  function irA(n){ pista.scrollTo({ left: n * paso(), behavior:"smooth" }); }
+
+  function actualizar(){
+    var idx = Math.round(pista.scrollLeft / paso());
+    if(idx < 0) idx = 0;
+    if(idx > puntos.length - 1) idx = puntos.length - 1;
+    for(var i=0;i<puntos.length;i++) puntos[i].classList.toggle("activo", i === idx);
+
+    /* Las flechas se desactivan en los extremos */
+    ant.disabled = pista.scrollLeft <= 2;
+    sig.disabled = pista.scrollLeft + pista.clientWidth >= pista.scrollWidth - 2;
+  }
+
+  ant.addEventListener("click", function(){ pista.scrollBy({ left:-paso(), behavior:"smooth" }); });
+  sig.addEventListener("click", function(){ pista.scrollBy({ left: paso(), behavior:"smooth" }); });
+
+  /* Flechas del teclado, sin interferir con el visor a pantalla completa */
+  pista.addEventListener("keydown", function(e){
+    var visor = document.getElementById("visor");
+    if(visor && visor.classList.contains("abierto")) return;
+    if(e.key === "ArrowLeft"){  e.preventDefault(); pista.scrollBy({ left:-paso(), behavior:"smooth" }); }
+    if(e.key === "ArrowRight"){ e.preventDefault(); pista.scrollBy({ left: paso(), behavior:"smooth" }); }
+  });
+
+  var esperando = false;
+  pista.addEventListener("scroll", function(){
+    if(esperando) return;
+    esperando = true;
+    window.requestAnimationFrame(function(){ actualizar(); esperando = false; });
+  }, { passive:true });
+
+  window.addEventListener("resize", actualizar);
+  actualizar();
+})();
+
+
+/* ==========================================================================
+   7. GALERÍA: VISOR A PANTALLA COMPLETA (LIGHTBOX)
    ========================================================================== */
 (function(){
   var galeria = document.getElementById("galeria");
@@ -1932,7 +2102,21 @@ document.documentElement.classList.add("js");
     var pie    = item.querySelector(".galeria__pie");
 
     medio.innerHTML = "";
-    if(fuente) medio.appendChild(fuente.cloneNode(true));
+    if(fuente){
+      var clon = fuente.cloneNode(true);
+      if(clon.tagName === "IMG"){
+        /* En la tarjeta se muestra el recorte 4:3 para que todas se vean
+           iguales; aquí se cambia por la fotografía sin recortar, con su
+           proporción original. */
+        var completa = clon.getAttribute("data-completa");
+        if(completa) clon.setAttribute("src", completa);
+        clon.removeAttribute("width");     /* que manden las dimensiones reales */
+        clon.removeAttribute("height");
+        clon.removeAttribute("loading");   /* se necesita ya, no diferida */
+        clon.style.aspectRatio = "auto";
+      }
+      medio.appendChild(clon);
+    }
     titulo.textContent = (pie ? pie.textContent.trim() : "")
                        + "  ·  " + (indice + 1) + " de " + items.length;
   }
